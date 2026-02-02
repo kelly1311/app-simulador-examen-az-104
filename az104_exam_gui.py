@@ -20,6 +20,7 @@ EXAM_TIME_LIMIT = 120 * 60
 QUESTIONS_DB = {
     "governance": {
         "name": "Administrar Identidades y Gobernanza de Azure",
+        "percentage": "20-25%",
         "color": "#4A90D9",
         "questions": [
             {
@@ -355,6 +356,7 @@ El grupo de recursos RG-Applications tiene la etiqueta: Environment = Production
     },
     "storage": {
         "name": "Implementar y Administrar Almacenamiento",
+        "percentage": "15-20%",
         "color": "#50C878",
         "questions": [
             {
@@ -672,7 +674,8 @@ Requisitos:
         ]
     },
     "compute": {
-        "name": "Implementar y Administrar Recursos de Proceso",
+        "name": "Desplegar y Administrar Recursos de Cómputo",
+        "percentage": "20-25%",
         "color": "#FF6B6B",
         "questions": [
             {
@@ -994,7 +997,8 @@ Necesita planificar la capacidad para manejar picos de tráfico.
         ]
     },
     "networking": {
-        "name": "Configurar y Administrar Redes Virtuales",
+        "name": "Implementar y Administrar Redes Virtuales",
+        "percentage": "15-20%",
         "color": "#9B59B6",
         "questions": [
             {
@@ -1336,6 +1340,7 @@ Requisitos:
     },
     "monitoring": {
         "name": "Monitorear y Mantener Recursos de Azure",
+        "percentage": "10-15%",
         "color": "#F39C12",
         "questions": [
             {
@@ -1828,16 +1833,17 @@ class AZ104ExamApp:
 
         for topic_key, topic_data in QUESTIONS_DB.items():
             num_questions = len(topic_data['questions'])
+            percentage = topic_data.get('percentage', '')
 
             topic_btn = tk.Button(
                 topics_frame,
-                text=f"{topic_data['name']}\n({num_questions} preguntas)",
+                text=f"{topic_data['name']} ({percentage})\n({num_questions} preguntas)",
                 font=('Segoe UI', 12),
                 fg="white",
                 bg=topic_data['color'],
                 activebackground=topic_data['color'],
                 activeforeground="white",
-                width=45,
+                width=50,
                 height=3,
                 cursor="hand2",
                 relief="flat",

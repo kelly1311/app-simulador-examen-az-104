@@ -28,7 +28,8 @@ class Colors:
 # Banco de preguntas por tema
 QUESTIONS_DB = {
     "governance": {
-        "name": "Gobernanza y Administración de Identidades",
+        "name": "Administrar Identidades y Gobernanza de Azure",
+        "percentage": "20-25%",
         "questions": [
             {
                 "id": 1,
@@ -228,7 +229,8 @@ QUESTIONS_DB = {
         ]
     },
     "storage": {
-        "name": "Implementación y Administración de Almacenamiento",
+        "name": "Implementar y Administrar Almacenamiento",
+        "percentage": "15-20%",
         "questions": [
             {
                 "id": 1,
@@ -428,7 +430,8 @@ QUESTIONS_DB = {
         ]
     },
     "compute": {
-        "name": "Despliegue y Administración de Azure Compute Resources",
+        "name": "Desplegar y Administrar Recursos de Cómputo",
+        "percentage": "20-25%",
         "questions": [
             {
                 "id": 1,
@@ -628,7 +631,8 @@ QUESTIONS_DB = {
         ]
     },
     "networking": {
-        "name": "Implementación y Administración de Virtual Networking",
+        "name": "Implementar y Administrar Redes Virtuales",
+        "percentage": "15-20%",
         "questions": [
             {
                 "id": 1,
@@ -828,7 +832,8 @@ QUESTIONS_DB = {
         ]
     },
     "monitoring": {
-        "name": "Monitoreo y Administración de Recursos de Azure",
+        "name": "Monitorear y Mantener Recursos de Azure",
+        "percentage": "10-15%",
         "questions": [
             {
                 "id": 1,
@@ -1055,12 +1060,13 @@ def print_menu():
 def print_topics_menu():
     """Imprime el menú de temas"""
     print(f"\n{Colors.YELLOW}SELECCIONE UN TEMA:{Colors.ENDC}")
-    print("-" * 50)
+    print("-" * 60)
     topics = list(QUESTIONS_DB.keys())
     for i, topic in enumerate(topics, 1):
-        print(f"{i}. {QUESTIONS_DB[topic]['name']}")
+        topic_data = QUESTIONS_DB[topic]
+        print(f"{i}. {topic_data['name']} ({topic_data['percentage']})")
     print(f"{len(topics) + 1}. Volver al menú principal")
-    print("-" * 50)
+    print("-" * 60)
 
 def get_questions_by_topic(topic_key: str, num_questions: int = None) -> List[Dict]:
     """Obtiene preguntas de un tema específico"""

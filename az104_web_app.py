@@ -18,6 +18,7 @@ PORT = 8080
 QUESTIONS_DB = {
     "governance": {
         "name": "Administrar Identidades y Gobernanza de Azure",
+        "percentage": "20-25%",
         "icon": "👥",
         "color": "#4A90D9",
         "questions": [
@@ -354,6 +355,7 @@ El grupo de recursos RG-Applications tiene la etiqueta: Environment = Production
     },
     "storage": {
         "name": "Implementar y Administrar Almacenamiento",
+        "percentage": "15-20%",
         "icon": "💾",
         "color": "#50C878",
         "questions": [
@@ -672,7 +674,8 @@ Requisitos:
         ]
     },
     "compute": {
-        "name": "Implementar y Administrar Recursos de Proceso",
+        "name": "Desplegar y Administrar Recursos de Cómputo",
+        "percentage": "20-25%",
         "icon": "🖥️",
         "color": "#FF6B6B",
         "questions": [
@@ -995,7 +998,8 @@ Necesita planificar la capacidad para manejar picos de tráfico.
         ]
     },
     "networking": {
-        "name": "Configurar y Administrar Redes Virtuales",
+        "name": "Implementar y Administrar Redes Virtuales",
+        "percentage": "15-20%",
         "icon": "🌐",
         "color": "#9B59B6",
         "questions": [
@@ -1338,6 +1342,7 @@ Requisitos:
     },
     "monitoring": {
         "name": "Monitorear y Mantener Recursos de Azure",
+        "percentage": "10-15%",
         "icon": "📊",
         "color": "#F39C12",
         "questions": [
@@ -1788,6 +1793,13 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
             color: #888;
         }
 
+        .topic-card p.topic-percentage {
+            color: var(--topic-color);
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
         /* Question Section */
         .question-container {
             background: rgba(255, 255, 255, 0.05);
@@ -2208,10 +2220,12 @@ HTML_TEMPLATE = '''<!DOCTYPE html>
             let topicsHTML = '';
 
             for (const [key, topic] of Object.entries(questionsDB)) {
+                const percentage = topic.percentage || '';
                 topicsHTML += `
                     <div class="topic-card" style="--topic-color: ${topic.color}" onclick="startPractice('${key}')">
                         <div class="icon">${topic.icon}</div>
                         <h3>${topic.name}</h3>
+                        <p class="topic-percentage">${percentage}</p>
                         <p>${topic.questions.length} preguntas</p>
                     </div>
                 `;
