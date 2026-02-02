@@ -17,6 +17,10 @@ EXAM_TIME_LIMIT = 120 * 60
 # BANCO DE PREGUNTAS - Estilo Examen Real AZ-104
 # ============================================================================
 
+
+# Banco de preguntas estilo examen real AZ-104
+# Basado en Microsoft Learn Study Guide (Abril 2025)
+
 QUESTIONS_DB = {
     "governance": {
         "name": "Administrar Identidades y Gobernanza de Azure",
@@ -28,329 +32,277 @@ QUESTIONS_DB = {
                 "type": "single",
                 "question": """CASO DE ESTUDIO: Contoso, Ltd.
 
-Contoso tiene una suscripción de Azure llamada Sub1 que contiene los siguientes recursos:
+Contoso, Ltd. es una empresa de consultoría con oficinas principales en Montreal y sucursales en Seattle y Nueva York.
+
+La empresa tiene los siguientes usuarios en Microsoft Entra ID:
+
+| Usuario | Departamento | Rol actual |
+|---------|--------------|------------|
+| User1 | IT | Global Reader |
+| User2 | HR | None |
+| User3 | Finance | User Administrator |
+
+User2 necesita crear y administrar grupos de seguridad en Microsoft Entra ID, pero NO debe poder crear ni administrar usuarios.
+
+¿Cuál es el rol de Microsoft Entra ID con PRIVILEGIOS MÍNIMOS que debe asignar a User2?""",
+                "options": ['Global Administrator', 'User Administrator', 'Groups Administrator', 'Directory Writers'],
+                "answer": 2,
+                "explanation": "Groups Administrator es el rol con privilegios mínimos que permite crear y administrar todos los aspectos de los grupos sin tener permisos para administrar usuarios. User Administrator puede crear grupos pero también tiene permisos para administrar usuarios, lo cual viola el principio de privilegio mínimo. Global Administrator tiene todos los permisos. Directory Writers no puede crear grupos de seguridad."
+            },
+            {
+                "id": 2,
+                "type": "single",
+                "question": """ESCENARIO: Litware, Inc.
+
+Litware tiene una suscripción de Azure llamada Sub1 que contiene los siguientes recursos:
 
 | Nombre | Tipo | Grupo de Recursos |
 |--------|------|-------------------|
 | VM1 | Virtual Machine | RG-Prod |
 | VM2 | Virtual Machine | RG-Prod |
-| Storage1 | Storage Account | RG-Data |
+| SA1 | Storage Account | RG-Data |
 | VNET1 | Virtual Network | RG-Network |
 
-Contoso tiene un usuario llamado Admin1 que necesita poder asignar roles de Azure RBAC a otros usuarios para recursos en Sub1. Admin1 NO debe poder realizar ninguna otra tarea administrativa.
+Un administrador llamado Admin1 necesita poder asignar roles de Azure RBAC a otros usuarios para los recursos en Sub1.
+
+Admin1 NO debe poder:
+- Crear ni eliminar recursos
+- Modificar configuraciones de recursos
 
 ¿Qué rol debe asignar a Admin1?""",
-                "options": [
-                    "Owner",
-                    "User Access Administrator",
-                    "Contributor",
-                    "Security Administrator"
-                ],
-                "answer": 1,
-                "explanation": "User Access Administrator es el rol con privilegios mínimos que permite gestionar el acceso de usuarios a los recursos de Azure. Este rol puede crear asignaciones de roles pero no puede realizar otras tareas administrativas como crear o modificar recursos. Owner también puede asignar roles pero incluye permisos completos de administración. Contributor puede administrar recursos pero no puede asignar roles."
-            },
-            {
-                "id": 2,
-                "type": "single",
-                "question": """Tiene un tenant de Microsoft Entra ID (Azure AD) llamado contoso.com que contiene los siguientes usuarios:
-
-| Nombre | Departamento | Rol Asignado |
-|--------|--------------|--------------|
-| User1 | IT | Ninguno |
-| User2 | HR | Ninguno |
-| User3 | Finance | Groups Administrator |
-
-User1 necesita crear grupos de seguridad en Microsoft Entra ID.
-
-¿Cuál es el rol de Microsoft Entra ID con privilegios mínimos que debe asignar a User1?""",
-                "options": [
-                    "Global Administrator",
-                    "Groups Administrator",
-                    "User Administrator",
-                    "Directory Writers"
-                ],
-                "answer": 1,
-                "explanation": "Groups Administrator es el rol con privilegios mínimos que permite crear y gestionar todos los aspectos de los grupos en Microsoft Entra ID. User Administrator puede crear grupos pero tiene permisos adicionales innecesarios para gestionar usuarios. Global Administrator tiene todos los permisos. Directory Writers tiene permisos muy limitados y no puede crear grupos de seguridad."
+                "options": ['Owner', 'Contributor', 'User Access Administrator', 'Security Administrator'],
+                "answer": 2,
+                "explanation": "User Access Administrator permite gestionar el acceso de usuarios a los recursos de Azure (asignar roles RBAC) sin poder crear, modificar o eliminar recursos. Owner tiene todos los permisos incluyendo RBAC y administración de recursos. Contributor puede administrar recursos pero NO puede asignar roles. Security Administrator es para configuraciones de seguridad en Microsoft Defender for Cloud."
             },
             {
                 "id": 3,
                 "type": "single",
-                "question": """Fabrikam, Inc. tiene la siguiente configuración de Azure:
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-- Suscripción: Fabrikam-Sub1
+Fabrikam tiene la siguiente configuración de Azure:
+
 - Tenant de Microsoft Entra: fabrikam.com
-- Regiones permitidas: Solo East US y West US
+- Suscripción: Fabrikam-Prod
+- Política de la empresa: Los recursos solo pueden crearse en East US y West US
 
-Los desarrolladores de Fabrikam reportan que pueden crear máquinas virtuales en la región North Europe, lo cual viola la política de la empresa.
+Los desarrolladores reportan que pudieron crear máquinas virtuales en North Europe, violando la política de la empresa.
 
 Necesita implementar una solución que PREVENGA la creación de recursos en regiones no autorizadas.
 
 ¿Qué efecto de Azure Policy debe usar?""",
-                "options": [
-                    "Audit - para registrar recursos no conformes",
-                    "Deny - para prevenir la creación de recursos no conformes",
-                    "Append - para agregar configuraciones a los recursos",
-                    "DeployIfNotExists - para remediar recursos no conformes"
-                ],
+                "options": ['Audit', 'Deny', 'Append', 'DeployIfNotExists'],
                 "answer": 1,
-                "explanation": "El efecto 'Deny' previene activamente la creación de recursos que no cumplan con la política. 'Audit' solo registra el incumplimiento pero permite la creación. 'Append' agrega propiedades a recursos existentes. 'DeployIfNotExists' despliega recursos de remediación después de la creación. Solo 'Deny' puede PREVENIR la creación."
+                "explanation": "El efecto 'Deny' previene activamente la creación o actualización de recursos que no cumplan con la política. 'Audit' solo registra el incumplimiento en el Activity Log pero permite la creación. 'Append' agrega propiedades a recursos. 'DeployIfNotExists' despliega recursos de remediación después de la creación del recurso no conforme."
             },
             {
                 "id": 4,
                 "type": "single",
-                "question": """Tiene una aplicación web de Azure App Service llamada WebApp1 que necesita acceder a un Azure Key Vault llamado KV1 para obtener secretos.
+                "question": """ESCENARIO: A. Datum Corporation
 
-Los requisitos son:
-- La solución NO debe requerir almacenar credenciales en el código
-- La solución NO debe requerir rotación manual de credenciales
-- La solución debe usar el principio de privilegio mínimo
+A. Datum tiene la siguiente jerarquía de Azure:
 
-¿Qué debe configurar?""",
-                "options": [
-                    "Crear un usuario de Microsoft Entra y almacenar las credenciales en App Settings",
-                    "Crear un Service Principal con un secreto de cliente y almacenarlo en Key Vault",
-                    "Habilitar System-Assigned Managed Identity para WebApp1",
-                    "Crear un grupo de Microsoft Entra y agregar WebApp1 como miembro"
-                ],
-                "answer": 2,
-                "explanation": "System-Assigned Managed Identity es la solución correcta porque: 1) Azure gestiona automáticamente las credenciales, 2) No requiere almacenar secretos en el código ni en configuración, 3) Las credenciales rotan automáticamente, 4) La identidad se elimina automáticamente cuando se elimina el recurso. Service Principal requiere gestión manual de secretos. Las credenciales de usuario no son apropiadas para aplicaciones."
+Tenant Root Group
+└── MG-Enterprise
+    ├── MG-Production
+    │   ├── Sub-Prod1
+    │   └── Sub-Prod2
+    └── MG-Development
+        └── Sub-Dev1
+
+Aplica una Azure Policy en MG-Production que requiere la etiqueta "CostCenter" en todos los recursos.
+
+¿Qué recursos serán evaluados por esta política?""",
+                "options": ['Solo los recursos en Sub-Prod1', 'Los recursos en Sub-Prod1 y Sub-Prod2', 'Los recursos en todas las suscripciones (Sub-Prod1, Sub-Prod2, Sub-Dev1)', 'Solo los recursos creados después de asignar la política'],
+                "answer": 1,
+                "explanation": "Las políticas de Azure se heredan hacia abajo en la jerarquía. Una política asignada a MG-Production afectará a todas las suscripciones dentro de ese grupo de administración (Sub-Prod1 y Sub-Prod2), pero NO a Sub-Dev1 que está en MG-Development. La política evalúa tanto recursos existentes como nuevos."
             },
             {
                 "id": 5,
                 "type": "single",
-                "question": """Tiene la siguiente jerarquía de Azure:
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Grupo de Administración Raíz (Tenant Root Group)
-└── MG-Production
-    ├── Sub-Prod1 (Suscripción)
-    │   └── RG-Web (Grupo de Recursos)
-    └── Sub-Prod2 (Suscripción)
-        └── RG-Database (Grupo de Recursos)
+Un usuario de Contoso con el rol Contributor en la suscripción intenta crear una máquina virtual y recibe el siguiente error:
 
-Asigna una Azure Policy en MG-Production que requiere la etiqueta "Environment".
+"RequestDisallowedByPolicy: Resource 'VM3' was disallowed by policy."
 
-¿Qué recursos se verán afectados por esta política?""",
-                "options": [
-                    "Solo los recursos en Sub-Prod1",
-                    "Solo los grupos de recursos RG-Web y RG-Database",
-                    "Todos los recursos en Sub-Prod1 y Sub-Prod2",
-                    "Solo los recursos creados después de asignar la política"
-                ],
-                "answer": 2,
-                "explanation": "Las políticas asignadas a un grupo de administración se heredan a TODAS las suscripciones y recursos dentro de ese grupo de administración. La herencia va: Grupo de Administración → Suscripciones → Grupos de Recursos → Recursos. Por lo tanto, todos los recursos en Sub-Prod1 y Sub-Prod2 serán evaluados contra esta política, tanto existentes como nuevos."
+La suscripción tiene la siguiente configuración:
+- Azure Policy: "Allowed virtual machine size SKUs" configurada para permitir solo Standard_D2s_v3
+- Resource Locks: Ninguno configurado
+
+El usuario intentó crear una VM con el tamaño Standard_B2ms.
+
+¿Cuál es la causa del error?""",
+                "options": ['El rol Contributor no tiene permisos para crear VMs', 'Azure Policy está bloqueando la creación porque el SKU no está permitido', 'Existe un Resource Lock de tipo ReadOnly en la suscripción', 'El usuario necesita el rol Owner para crear VMs'],
+                "answer": 1,
+                "explanation": "El mensaje 'RequestDisallowedByPolicy' indica que una Azure Policy está bloqueando la operación. La política 'Allowed virtual machine size SKUs' solo permite Standard_D2s_v3, pero se intentó crear con Standard_B2ms. El rol Contributor tiene permisos completos para crear VMs. Azure Policy se evalúa DESPUÉS de RBAC y puede bloquear operaciones incluso con permisos suficientes."
             },
             {
                 "id": 6,
-                "type": "single",
-                "question": """Un administrador con el rol de Contributor en una suscripción de Azure reporta que no puede crear una máquina virtual.
+                "type": "multiple",
+                "question": """ESCENARIO: Woodgrove Bank
 
-El error que recibe es: "RequestDisallowedByPolicy"
+Woodgrove Bank necesita configurar Microsoft Entra ID para cumplir con los siguientes requisitos:
 
-La suscripción tiene la siguiente configuración:
-- Azure Policy: "Allowed virtual machine SKUs" (Solo permite Standard_D2s_v3)
-- Resource Lock: No hay bloqueos configurados
-- RBAC: El administrador tiene rol Contributor
+- Los usuarios deben poder restablecer sus propias contraseñas sin contactar al helpdesk
+- Se requiere autenticación multifactor para usuarios con roles administrativos
+- Los dispositivos móviles de los empleados deben poder acceder a recursos corporativos
 
-El administrador intentó crear una VM con SKU Standard_B2ms.
-
-¿Cuál es la causa del error?""",
-                "options": [
-                    "El rol Contributor no tiene permisos para crear VMs",
-                    "Azure Policy está bloqueando la creación porque el SKU no está permitido",
-                    "Existe un Resource Lock de tipo ReadOnly",
-                    "El administrador necesita el rol Owner"
-                ],
-                "answer": 1,
-                "explanation": "El error 'RequestDisallowedByPolicy' indica claramente que una Azure Policy está bloqueando la operación. La política 'Allowed virtual machine SKUs' solo permite Standard_D2s_v3, pero el administrador intentó crear una VM con Standard_B2ms. El rol Contributor tiene permisos completos para crear VMs, pero Azure Policy tiene precedencia sobre los permisos de RBAC para operaciones de escritura."
+¿Qué DOS características de Microsoft Entra debe configurar? (Seleccione dos)""",
+                "options": ['Self-Service Password Reset (SSPR)', 'Microsoft Entra Connect', 'Conditional Access', 'Microsoft Entra Domain Services'],
+                "answer": [0, 2],
+                "explanation": "Self-Service Password Reset (SSPR) permite a los usuarios restablecer sus propias contraseñas. Conditional Access permite crear políticas que requieran MFA para roles específicos y controlar el acceso desde dispositivos. Microsoft Entra Connect es para sincronización con AD on-premises. Microsoft Entra Domain Services proporciona servicios de dominio administrados."
             },
             {
                 "id": 7,
                 "type": "single",
-                "question": """Litware, Inc. tiene el siguiente requisito de cumplimiento:
+                "question": """ESCENARIO: Tailwind Traders
 
-"Todos los recursos de Azure DEBEN tener una etiqueta llamada 'CostCenter' con un valor válido. Los recursos que no tengan esta etiqueta NO deben poder crearse."
+Tailwind Traders tiene una aplicación web en Azure App Service que necesita acceder a secretos almacenados en Azure Key Vault.
 
-Necesita implementar este requisito usando Azure Policy.
+Los requisitos son:
+- NO almacenar credenciales en el código o configuración de la aplicación
+- NO requerir rotación manual de credenciales
+- La identidad debe eliminarse automáticamente si se elimina la aplicación
 
-¿Qué definición de política integrada debe usar?""",
-                "options": [
-                    "Require a tag on resources",
-                    "Require a tag on resource groups",
-                    "Inherit a tag from the resource group if missing",
-                    "Add a tag to resources"
-                ],
-                "answer": 0,
-                "explanation": "'Require a tag on resources' usa el efecto Deny para prevenir la creación de recursos que no tengan la etiqueta especificada. 'Require a tag on resource groups' solo aplica a grupos de recursos, no a recursos individuales. 'Inherit a tag from the resource group' copia etiquetas pero no previene la creación. 'Add a tag to resources' usa Modify para agregar etiquetas después de la creación, no previene la creación."
+¿Qué debe configurar?""",
+                "options": ['Crear un Service Principal con secreto de cliente', 'Habilitar System-Assigned Managed Identity', 'Habilitar User-Assigned Managed Identity', 'Usar las Access Keys del Key Vault'],
+                "answer": 1,
+                "explanation": "System-Assigned Managed Identity cumple todos los requisitos: Azure gestiona las credenciales automáticamente, no requiere almacenar secretos, las credenciales rotan automáticamente, y la identidad se elimina cuando se elimina el recurso. User-Assigned Managed Identity persiste independientemente del recurso. Service Principal requiere gestión manual de secretos."
             },
             {
                 "id": 8,
                 "type": "single",
-                "question": """Tiene una suscripción de Azure con Microsoft Entra ID Premium P2.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Necesita configurar lo siguiente:
-- Revisiones periódicas trimestrales de los miembros del grupo "Azure-Admins"
-- Los revisores deben ser los managers de cada miembro
-- Los miembros que no sean aprobados deben ser removidos automáticamente
+Contoso tiene los siguientes grupos de recursos:
 
-¿Dónde debe configurar esto?""",
-                "options": [
-                    "Microsoft Entra ID > Privileged Identity Management",
-                    "Microsoft Entra ID > Identity Protection",
-                    "Microsoft Entra ID > Identity Governance > Access Reviews",
-                    "Microsoft Entra ID > Conditional Access"
-                ],
-                "answer": 2,
-                "explanation": "Access Reviews en Identity Governance es la característica específica para configurar revisiones periódicas de membresía de grupos. Permite configurar: frecuencia de revisión, quiénes son los revisores, y acciones automáticas para miembros no aprobados (como remoción). PIM es para acceso privilegiado just-in-time. Identity Protection es para detección de riesgos. Conditional Access es para políticas de acceso basadas en condiciones."
+| Grupo de Recursos | Bloqueo | Tipo de Bloqueo |
+|-------------------|---------|-----------------|
+| RG-Production | Lock1 | Delete |
+| RG-Staging | Ninguno | N/A |
+| RG-Development | Lock2 | ReadOnly |
+
+Un administrador con rol Owner intenta eliminar una VM en RG-Development.
+
+¿Cuál será el resultado?""",
+                "options": ['La VM se eliminará correctamente', 'La operación fallará porque el bloqueo ReadOnly previene eliminaciones', 'La operación fallará porque se requiere el rol Contributor', 'La VM se eliminará pero el disco persistirá'],
+                "answer": 1,
+                "explanation": "Un bloqueo ReadOnly previene cualquier modificación a los recursos, incluyendo eliminaciones. Incluso un Owner no puede eliminar recursos bajo un bloqueo ReadOnly sin primero eliminar el bloqueo. El bloqueo Delete solo previene eliminaciones pero permite modificaciones."
             },
             {
                 "id": 9,
                 "type": "single",
-                "question": """Tiene la siguiente configuración:
+                "question": """ESCENARIO: Litware, Inc.
 
-- Suscripción: Contoso-Sub1
-  - Grupo de Recursos: RG-Production
-    - VM: VM-Web01
-    - VM: VM-Web02
-  - Grupo de Recursos: RG-Development
-    - VM: VM-Dev01
+Litware necesita implementar la siguiente política de etiquetado:
 
-Un desarrollador llamado Dev1 necesita:
-- Iniciar y detener VM-Dev01
-- NO debe poder acceder a ningún recurso en RG-Production
+"Todos los recursos DEBEN tener una etiqueta llamada 'Environment' con un valor. Los recursos sin esta etiqueta NO deben poder crearse."
 
-¿En qué ámbito debe asignar el rol "Virtual Machine Contributor" a Dev1?""",
-                "options": [
-                    "A nivel de suscripción Contoso-Sub1",
-                    "A nivel de grupo de administración",
-                    "A nivel del grupo de recursos RG-Development",
-                    "A nivel de la VM VM-Dev01"
-                ],
-                "answer": 2,
-                "explanation": "Para cumplir con el principio de privilegio mínimo, el rol debe asignarse en el ámbito más restrictivo posible. Asignar a nivel de RG-Development permite a Dev1 administrar VMs en ese grupo de recursos (actualmente solo VM-Dev01) pero no en RG-Production. Asignar a nivel de VM individual sería más restrictivo pero limitaría la capacidad de crear nuevas VMs de desarrollo si fuera necesario."
+¿Qué definición de Azure Policy integrada debe usar?""",
+                "options": ['Require a tag and its value on resources', 'Require a tag on resource groups', 'Inherit a tag from the resource group if missing', 'Add a tag to resources'],
+                "answer": 0,
+                "explanation": "'Require a tag and its value on resources' usa el efecto Deny para prevenir la creación de recursos que no tengan la etiqueta especificada con un valor. 'Require a tag on resource groups' aplica solo a grupos de recursos. 'Inherit a tag' copia etiquetas pero no previene la creación. 'Add a tag' usa Modify para agregar etiquetas después de la creación."
             },
             {
                 "id": 10,
                 "type": "single",
-                "question": """Su empresa tiene los siguientes requisitos para administradores de Azure:
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-1. Los administradores deben solicitar acceso a roles privilegiados cuando los necesiten
-2. Las solicitudes deben requerir aprobación de un administrador senior
-3. El acceso privilegiado debe ser temporal (máximo 8 horas)
-4. Todas las activaciones deben requerir justificación
+Fabrikam tiene usuarios externos que necesitan colaborar en proyectos de Azure. Los usuarios externos son de una organización asociada con el dominio partner.com.
 
-¿Qué característica de Microsoft Entra debe implementar?""",
-                "options": [
-                    "Conditional Access con control de sesión",
-                    "Privileged Identity Management (PIM)",
-                    "Identity Protection con políticas de riesgo",
-                    "Roles personalizados de Azure RBAC"
-                ],
+Los requisitos son:
+- Los usuarios externos deben autenticarse usando sus credenciales de partner.com
+- Los usuarios externos deben poder acceder a recursos específicos en la suscripción de Fabrikam
+- Debe minimizarse la sobrecarga administrativa
+
+¿Qué debe configurar?""",
+                "options": ['Crear usuarios miembro en Microsoft Entra ID para cada usuario externo', 'Configurar Microsoft Entra B2B collaboration e invitar usuarios guest', 'Configurar Microsoft Entra B2C', 'Crear un nuevo tenant de Microsoft Entra para los usuarios externos'],
                 "answer": 1,
-                "explanation": "Privileged Identity Management (PIM) proporciona exactamente estas capacidades: 1) Activación just-in-time de roles, 2) Flujos de trabajo de aprobación, 3) Acceso con límite de tiempo, 4) Requisito de justificación. También proporciona alertas y auditoría de activaciones. Conditional Access no proporciona activación de roles. Identity Protection es para detección de riesgos. RBAC personalizado no proporciona acceso temporal."
+                "explanation": "Microsoft Entra B2B (Business-to-Business) collaboration permite invitar usuarios externos como guests. Los usuarios se autentican con sus propias credenciales (partner.com) y pueden acceder a recursos según los permisos asignados. B2C es para aplicaciones consumer-facing. Crear usuarios miembro o un nuevo tenant aumentaría la sobrecarga administrativa."
             },
             {
                 "id": 11,
-                "type": "multiple",
-                "question": """Tiene un entorno híbrido con Active Directory Domain Services (AD DS) on-premises y Microsoft Entra ID.
+                "type": "single",
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Necesita implementar sincronización de identidades usando Microsoft Entra Connect.
+Contoso tiene configurado Microsoft Entra Connect para sincronizar su Active Directory on-premises con Microsoft Entra ID.
 
-¿Cuáles DOS métodos de autenticación puede configurar con Microsoft Entra Connect? (Seleccione dos)""",
-                "options": [
-                    "Password Hash Synchronization (PHS)",
-                    "Certificate-based authentication",
-                    "Pass-through Authentication (PTA)",
-                    "RADIUS authentication"
-                ],
-                "answer": [0, 2],
-                "explanation": "Microsoft Entra Connect soporta tres métodos de autenticación: 1) Password Hash Synchronization (PHS) - sincroniza hashes de contraseñas a la nube, 2) Pass-through Authentication (PTA) - valida contraseñas directamente contra AD DS on-premises, 3) Federation con AD FS (no listada). Certificate-based y RADIUS authentication no son métodos de autenticación de Microsoft Entra Connect."
+Un usuario on-premises llamado User1 tiene los siguientes atributos:
+- userPrincipalName: user1@contoso.local
+- mail: user1@contoso.com
+
+Después de la sincronización, User1 no puede iniciar sesión en Azure Portal.
+
+¿Qué debe hacer para resolver el problema?""",
+                "options": ['Cambiar el userPrincipalName on-premises a user1@contoso.com', 'Agregar y verificar el dominio contoso.local en Microsoft Entra ID', 'Deshabilitar la sincronización de hash de contraseñas', 'Asignar una licencia de Microsoft Entra ID Premium a User1'],
+                "answer": 0,
+                "explanation": "El dominio .local no es un dominio enrutable en Internet y no puede verificarse en Microsoft Entra ID. El userPrincipalName debe usar un dominio verificado (como contoso.com) para que el usuario pueda autenticarse. La solución es cambiar el UPN on-premises a un dominio verificado o agregar un sufijo UPN alternativo en Active Directory."
             },
             {
                 "id": 12,
                 "type": "single",
-                "question": """Tiene una suscripción de Azure con múltiples grupos de recursos que contienen cientos de recursos.
+                "question": """ESCENARIO: A. Datum Corporation
 
-El CFO necesita:
-- Ver los costos de TODOS los recursos en la suscripción
-- Crear reportes de costos y exportarlos
-- Configurar presupuestos y alertas de costos
-- NO debe poder crear, modificar o eliminar ningún recurso
+A. Datum necesita delegar la administración de Azure de la siguiente manera:
 
-¿Qué rol de Azure RBAC debe asignar al CFO?""",
-                "options": [
-                    "Reader",
-                    "Cost Management Reader",
-                    "Billing Reader",
-                    "Cost Management Contributor"
-                ],
-                "answer": 3,
-                "explanation": "Cost Management Contributor permite: ver costos, crear/gestionar exportaciones de costos, crear/gestionar presupuestos y alertas, pero NO permite modificar recursos. Cost Management Reader solo puede VER datos de costos, no puede crear presupuestos ni exportaciones. Reader puede ver recursos pero no datos detallados de costos. Billing Reader es para facturación a nivel de cuenta/suscripción, no para análisis de costos de recursos."
+- El equipo de Network debe poder administrar solo redes virtuales y NSGs
+- El equipo de Database debe poder administrar solo servidores SQL y bases de datos
+- Ningún equipo debe poder administrar recursos fuera de su área
+
+¿Cuál es la mejor estrategia para implementar esto?""",
+                "options": ['Asignar el rol Owner a cada equipo en la suscripción con Azure Policy para restringir', 'Crear grupos de recursos separados y asignar roles específicos a cada equipo en su grupo de recursos', 'Asignar el rol Contributor a todos los usuarios en la suscripción', 'Crear suscripciones separadas para cada equipo'],
+                "answer": 1,
+                "explanation": "La mejor práctica es usar grupos de recursos para agrupar recursos relacionados y asignar roles RBAC específicos (como Network Contributor, SQL DB Contributor) a cada equipo en su grupo de recursos correspondiente. Esto implementa el principio de mínimo privilegio y segmentación. Crear suscripciones separadas sería excesivo para este escenario."
             },
             {
                 "id": 13,
                 "type": "single",
-                "question": """Tailwind Traders tiene la siguiente estructura de Azure:
+                "question": """ESCENARIO: Woodgrove Bank
 
-Suscripciones:
-- TT-Production
-- TT-Development
-- TT-Testing
-- TT-Sandbox
+Woodgrove Bank tiene los siguientes requisitos de cumplimiento:
 
-Necesita aplicar las siguientes políticas de manera consistente en TODAS las suscripciones:
-- Allowed locations: East US, West US
-- Require tag: Environment
-- Allowed VM SKUs: Standard_D series only
+- Los usuarios con roles administrativos deben solicitar activación de sus privilegios
+- La activación debe requerir aprobación de un manager
+- Se debe registrar quién aprobó cada activación
+- Los privilegios deben expirar automáticamente después de 8 horas
 
-¿Cuál es la forma MÁS eficiente de implementar esto?""",
-                "options": [
-                    "Asignar las políticas individualmente en cada suscripción",
-                    "Crear un Management Group, mover las suscripciones, y asignar las políticas al Management Group",
-                    "Usar Azure Automation para aplicar las políticas",
-                    "Crear una Azure Blueprint y desplegarla en cada suscripción"
-                ],
+¿Qué característica de Microsoft Entra debe implementar?""",
+                "options": ['Conditional Access', 'Privileged Identity Management (PIM)', 'Identity Protection', 'Access Reviews'],
                 "answer": 1,
-                "explanation": "Usar un Management Group es la forma más eficiente porque: 1) Las políticas se heredan automáticamente a todas las suscripciones hijas, 2) Cualquier nueva suscripción agregada al grupo heredará las políticas automáticamente, 3) Gestión centralizada desde un solo lugar. Asignar individualmente no escala y requiere gestión manual. Azure Automation no es para políticas. Blueprints son para despliegues completos, no solo políticas."
+                "explanation": "Privileged Identity Management (PIM) proporciona activación just-in-time de roles privilegiados, flujos de aprobación, registro de auditoría completo y duración configurable de la activación. Conditional Access controla el acceso basado en condiciones pero no gestiona activación de roles. Access Reviews es para revisiones periódicas de acceso. Identity Protection detecta riesgos de identidad."
             },
             {
                 "id": 14,
-                "type": "multiple",
-                "question": """Tiene los siguientes requisitos de seguridad para Microsoft Entra ID:
+                "type": "single",
+                "question": """ESCENARIO: Tailwind Traders
 
-1. Los usuarios deben poder registrar sus dispositivos personales para acceder a recursos corporativos
-2. Los administradores deben usar MFA cuando accedan al portal de Azure
+Tailwind Traders necesita optimizar los costos de Azure. El equipo de finanzas requiere:
 
-¿Cuáles DOS características debe configurar? (Seleccione dos)""",
-                "options": [
-                    "Microsoft Entra Join para dispositivos corporativos",
-                    "Self-Service Password Reset (SSPR)",
-                    "Conditional Access con política para administradores",
-                    "Microsoft Entra Device Registration para dispositivos personales"
-                ],
-                "answer": [2, 3],
-                "explanation": "Para cumplir los requisitos: 1) Microsoft Entra Device Registration permite a usuarios registrar dispositivos personales (BYOD) sin unirlos completamente al directorio. 2) Conditional Access permite crear políticas que requieran MFA basado en condiciones como rol del usuario (administradores) y aplicación de destino (portal de Azure). Microsoft Entra Join es para dispositivos corporativos propiedad de la organización. SSPR es para restablecimiento de contraseñas."
+- Recibir alertas cuando el gasto supere el 80% del presupuesto mensual
+- Ver recomendaciones para reducir costos
+- Analizar el gasto por departamento usando etiquetas
+
+¿Qué herramientas debe usar?""",
+                "options": ['Azure Monitor y Log Analytics', 'Azure Cost Management + Billing y Azure Advisor', 'Azure Policy y Resource Graph', 'Microsoft Defender for Cloud'],
+                "answer": 1,
+                "explanation": "Azure Cost Management + Billing proporciona análisis de costos, presupuestos con alertas, y puede agrupar costos por etiquetas. Azure Advisor proporciona recomendaciones de optimización de costos (como VMs infrautilizadas, reservas). Azure Monitor es para métricas y logs operacionales. Azure Policy es para gobernanza, no análisis de costos."
             },
             {
                 "id": 15,
-                "type": "single",
-                "question": """Tiene un grupo de recursos llamado RG-Applications que contiene varios recursos.
+                "type": "multiple",
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Crea una Azure Policy con las siguientes características:
-- Definición: "Inherit a tag from the resource group"
-- Tag name: Environment
-- Efecto: Modify
+Contoso está configurando Microsoft Entra Connect para sincronizar usuarios desde Active Directory on-premises.
 
-El grupo de recursos RG-Applications tiene la etiqueta: Environment = Production
+Los requisitos son:
+- Los usuarios deben poder usar las mismas credenciales on-premises y en la nube
+- La autenticación debe validarse contra el AD on-premises
+- Si la conexión a on-premises falla, los usuarios deben poder seguir autenticándose
 
-¿Qué sucederá con los recursos en RG-Applications?""",
-                "options": [
-                    "Los recursos existentes y nuevos recibirán automáticamente la etiqueta Environment = Production",
-                    "Solo los recursos nuevos recibirán la etiqueta automáticamente",
-                    "Los recursos existentes recibirán la etiqueta, los nuevos deben etiquetarse manualmente",
-                    "Los recursos existentes recibirán la etiqueta solo después de ejecutar una tarea de remediación"
-                ],
-                "answer": 3,
-                "explanation": "Las políticas con efecto 'Modify' funcionan así: 1) Para recursos NUEVOS: la etiqueta se aplica automáticamente durante la creación, 2) Para recursos EXISTENTES: se requiere ejecutar una tarea de remediación para aplicar la etiqueta. Esto es porque las políticas no modifican recursos existentes automáticamente para evitar cambios no deseados. Debe crear una tarea de remediación desde la vista de cumplimiento de la política."
+¿Qué DOS opciones de autenticación debe configurar? (Seleccione dos)""",
+                "options": ['Password Hash Synchronization (PHS)', 'Pass-through Authentication (PTA)', 'Federation with AD FS', 'Certificate-based authentication'],
+                "answer": [0, 1],
+                "explanation": "Pass-through Authentication (PTA) valida contraseñas contra AD on-premises en tiempo real. Password Hash Synchronization (PHS) debe habilitarse como respaldo - si PTA falla, los usuarios pueden autenticarse usando los hashes sincronizados. Federation con AD FS también validaría on-premises pero no se solicitó y PTA es más simple. Certificate-based auth no es un método de Microsoft Entra Connect."
             }
         ]
     },
@@ -362,637 +314,480 @@ El grupo de recursos RG-Applications tiene la etiqueta: Environment = Production
             {
                 "id": 1,
                 "type": "single",
-                "question": """ESCENARIO: Contoso almacena registros de transacciones en Azure Blob Storage.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Patrón de acceso de los datos:
-- Días 1-30: Acceso frecuente para análisis en tiempo real
-- Días 31-90: Acceso ocasional para reportes mensuales
-- Días 91-365: Acceso muy raro, solo para auditoría
-- Después de 365 días: Retención legal, acceso extremadamente raro
+Contoso tiene una cuenta de almacenamiento llamada contosostorage con la siguiente configuración:
 
-Contoso necesita optimizar costos manteniendo los datos accesibles cuando se necesiten.
+| Propiedad | Valor |
+|-----------|-------|
+| Rendimiento | Standard |
+| Redundancia | LRS |
+| Nivel de acceso | Hot |
+
+Contoso almacena archivos de log que:
+- Se acceden frecuentemente durante los primeros 30 días
+- Raramente se acceden después de 30 días
+- Deben retenerse por 1 año
+- Deben optimizarse para costo
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "Hot tier para todos los blobs con eliminación después de 365 días",
-                    "Cool tier para todos los blobs con lifecycle management",
-                    "Hot tier con lifecycle management policy que mueva a Cool, luego a Archive",
-                    "Archive tier para todos los blobs desde el inicio"
-                ],
-                "answer": 2,
-                "explanation": "La solución correcta es: Hot tier inicial (acceso frecuente días 1-30) con lifecycle management que automáticamente mueva blobs a Cool tier (días 31-90), luego a Archive tier (después de 90 días). Esto optimiza costos: Hot es más caro pero óptimo para acceso frecuente, Cool es más económico para acceso ocasional, Archive es el más económico para retención a largo plazo."
+                "options": ['Cambiar la redundancia a GRS', 'Configurar Lifecycle Management para mover blobs a Cool después de 30 días y a Archive después de 90 días', 'Cambiar el nivel de acceso de la cuenta a Cool', 'Habilitar soft delete con retención de 365 días'],
+                "answer": 1,
+                "explanation": "Lifecycle Management permite automatizar el movimiento de blobs entre tiers basado en la antigüedad. Hot tier para los primeros 30 días (acceso frecuente), Cool tier para 30-90 días (acceso infrecuente, menor costo de almacenamiento), y Archive para el resto del año (costo mínimo de almacenamiento). Esto optimiza los costos automáticamente."
             },
             {
                 "id": 2,
                 "type": "single",
-                "question": """Fabrikam tiene una aplicación crítica que almacena datos en Azure Storage.
+                "question": """ESCENARIO: Litware, Inc.
 
-Requisitos:
-- Los datos deben sobrevivir a la pérdida completa de un datacenter
-- Los datos deben sobrevivir a la pérdida completa de una región de Azure
-- Se requiere acceso de lectura a los datos en la región secundaria durante una interrupción regional
-- Minimizar costos dentro de estos requisitos
+Litware tiene requisitos de recuperación de desastres para sus datos en Azure Storage:
 
-¿Qué opción de redundancia debe elegir?""",
-                "options": [
-                    "Locally Redundant Storage (LRS)",
-                    "Zone-Redundant Storage (ZRS)",
-                    "Geo-Redundant Storage (GRS)",
-                    "Read-Access Geo-Redundant Storage (RA-GRS)"
-                ],
+- Los datos deben estar disponibles si toda la región primaria falla
+- La aplicación debe poder leer datos de la región secundaria inmediatamente durante una interrupción
+- Los costos deben minimizarse
+
+¿Qué tipo de redundancia debe configurar?""",
+                "options": ['Locally Redundant Storage (LRS)', 'Zone-Redundant Storage (ZRS)', 'Geo-Redundant Storage (GRS)', 'Read-Access Geo-Redundant Storage (RA-GRS)'],
                 "answer": 3,
-                "explanation": "RA-GRS es la respuesta correcta porque: 1) Replica datos a una región secundaria (resistencia regional), 2) Mantiene 3 copias en la región primaria, 3) Proporciona acceso de LECTURA a la región secundaria SIN esperar failover. GRS también replica geográficamente pero NO proporciona acceso de lectura a la secundaria durante operación normal. ZRS protege contra falla de datacenter pero no contra falla regional. LRS solo protege contra falla de hardware."
+                "explanation": "RA-GRS replica datos a una región secundaria (como GRS) Y permite acceso de lectura a la región secundaria sin necesidad de failover. GRS también replica geográficamente pero la región secundaria solo es accesible después de un failover iniciado por Microsoft o el cliente. LRS y ZRS no proporcionan redundancia geográfica."
             },
             {
                 "id": 3,
                 "type": "single",
-                "question": """Tiene la siguiente configuración:
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-- 10 VMs Windows Server en Azure (diferentes regiones)
-- Aplicación que requiere compartir archivos de configuración entre todas las VMs
-- Los archivos deben ser accesibles mediante rutas UNC estándar de Windows (\\server\share)
-- Tamaño total estimado: 500 GB
+Fabrikam tiene múltiples máquinas virtuales Windows que necesitan compartir archivos. Los requisitos son:
+
+- Los archivos deben ser accesibles via protocolo SMB
+- Múltiples VMs deben poder acceder simultáneamente
+- Se requiere capacidad de 500 GB
+- Los archivos deben poder montarse como una unidad de red (Z:)
 
 ¿Qué servicio de Azure Storage debe usar?""",
-                "options": [
-                    "Azure Blob Storage con contenedor público",
-                    "Azure Files con SMB file share",
-                    "Azure Queue Storage",
-                    "Azure Table Storage"
-                ],
+                "options": ['Azure Blob Storage', 'Azure Files', 'Azure Queue Storage', 'Azure Table Storage'],
                 "answer": 1,
-                "explanation": "Azure Files es el servicio correcto porque: 1) Proporciona file shares accesibles via protocolo SMB 3.0, 2) Compatible con rutas UNC de Windows (\\storageaccount.file.core.windows.net\sharename), 3) Puede montarse en múltiples VMs simultáneamente, 4) Soporta los 500 GB requeridos (hasta 100 TiB por share). Blob Storage no soporta SMB ni rutas UNC directamente."
+                "explanation": "Azure Files proporciona file shares completamente administrados accesibles via protocolo SMB 3.0. Puede montarse como una unidad de red en Windows (y Linux/macOS) y permite acceso simultáneo desde múltiples VMs. Blob Storage es para objetos/archivos no estructurados pero no soporta SMB. Queue es para mensajería, Table para datos NoSQL."
             },
             {
                 "id": 4,
                 "type": "single",
-                "question": """Su empresa tiene requisitos de seguridad estrictos para datos almacenados en Azure:
+                "question": """ESCENARIO: Woodgrove Bank
 
-Requisito: "Todos los datos en reposo deben estar cifrados con claves controladas y rotadas por nuestra organización. Las claves deben almacenarse en un HSM validado FIPS 140-2 Level 2."
+Woodgrove Bank necesita proporcionar acceso temporal a un contractor externo para descargar un archivo específico de Blob Storage.
 
-¿Qué configuración de cifrado debe implementar?""",
-                "options": [
-                    "Storage Service Encryption (SSE) con Microsoft-managed keys",
-                    "Storage Service Encryption (SSE) con Customer-managed keys en Azure Key Vault",
-                    "Client-side encryption antes de subir los datos",
-                    "Azure Disk Encryption para las VMs que acceden al storage"
-                ],
+Los requisitos son:
+- El acceso debe expirar en 24 horas
+- El contractor solo debe poder descargar, no modificar ni eliminar
+- NO debe compartirse las access keys de la cuenta de almacenamiento
+- El acceso debe ser solo para ese archivo específico
+
+¿Qué debe crear?""",
+                "options": ['Una Stored Access Policy', 'Un Service SAS token con permisos de lectura', 'Un User Delegation SAS token', 'Configurar acceso anónimo público en el contenedor'],
                 "answer": 1,
-                "explanation": "SSE con Customer-managed keys (CMK) en Azure Key Vault cumple todos los requisitos: 1) Cifrado de datos en reposo automático, 2) La organización controla las claves en su propio Key Vault, 3) La organización puede rotar las claves según su política, 4) Azure Key Vault usa HSMs validados FIPS 140-2 Level 2 (o Level 3 con Key Vault Premium/HSM). Microsoft-managed keys no da control a la organización."
+                "explanation": "Un Service SAS (Shared Access Signature) permite delegar acceso granular a un recurso específico (blob individual) con permisos específicos (solo lectura) y tiempo de expiración (24 horas). User Delegation SAS usaría credenciales de Microsoft Entra pero tiene los mismos beneficios. Stored Access Policy define políticas reusables pero necesita SAS para generar tokens. Acceso anónimo expondría el archivo a todos."
             },
             {
                 "id": 5,
                 "type": "single",
-                "question": """Un partner externo necesita acceso temporal a un blob específico en su cuenta de almacenamiento.
+                "question": """ESCENARIO: A. Datum Corporation
 
-Requisitos:
-- Acceso solo de lectura
-- Válido solo por 24 horas
-- No debe requerir cuenta de Azure del partner
-- No debe exponer las claves de la cuenta de almacenamiento
-- Debe poder revocar el acceso si es necesario antes de que expire
+A. Datum tiene datos en Azure Blob Storage que deben cumplir con regulaciones de retención legal:
 
-¿Qué debe proporcionar al partner?""",
-                "options": [
-                    "Las Access Keys de la cuenta de almacenamiento",
-                    "Una Shared Access Signature (SAS) con User Delegation key",
-                    "Habilitar acceso anónimo público al contenedor",
-                    "Crear una cuenta de usuario de Microsoft Entra para el partner"
-                ],
-                "answer": 1,
-                "explanation": "User Delegation SAS es la mejor opción porque: 1) Proporciona acceso granular al blob específico, 2) Puede configurarse solo para lectura, 3) Tiene tiempo de expiración (24 horas), 4) No expone las claves de la cuenta, 5) Puede revocarse revocando las credenciales del usuario que creó el SAS o rotando las claves de delegación. Las Access Keys dan acceso completo. El acceso público no tiene control de tiempo. Una cuenta de usuario requiere licencia y es excesivo para acceso temporal."
+- Los datos NO deben poder modificarse durante 7 años
+- Los datos NO deben poder eliminarse durante 7 años
+- Debe cumplir con SEC Rule 17a-4
+
+¿Qué debe configurar?""",
+                "options": ['Soft delete con retención de 7 años', 'Blob versioning', 'Immutable storage con time-based retention policy', 'Legal hold sin retention policy'],
+                "answer": 2,
+                "explanation": "Immutable storage con time-based retention policy proporciona almacenamiento WORM (Write Once, Read Many) que cumple con regulaciones como SEC 17a-4, FINRA, CFTC. Los blobs no pueden modificarse ni eliminarse durante el período de retención. Soft delete permite recuperación pero no previene eliminación. Legal hold no tiene período definido. Versioning mantiene versiones pero permite eliminación."
             },
             {
                 "id": 6,
                 "type": "single",
-                "question": """Su empresa está sujeta a regulaciones financieras que requieren:
+                "question": """ESCENARIO: Tailwind Traders
 
-"Los registros de transacciones deben retenerse por exactamente 7 años. Durante este período, los registros NO pueden ser eliminados ni modificados bajo ninguna circunstancia, incluyendo por administradores."
+Tailwind Traders necesita migrar 60 TB de datos desde un datacenter on-premises a Azure Blob Storage.
 
-La cuenta de almacenamiento se llama contosotransactions.
+Las restricciones son:
+- La conexión de red es de solo 100 Mbps
+- La migración debe completarse en menos de 2 semanas
+- Los datos contienen información sensible
 
-¿Qué debe configurar en el contenedor de blobs?""",
-                "options": [
-                    "Soft delete con período de retención de 7 años",
-                    "Immutable storage con time-based retention policy de 7 años en estado Locked",
-                    "Lifecycle management policy para eliminar después de 7 años",
-                    "Legal hold sin fecha de expiración"
-                ],
+¿Cuál es la mejor solución?""",
+                "options": ['Usar AzCopy para transferir los datos por Internet', 'Usar Azure Data Box', 'Configurar Azure File Sync', 'Usar Azure Storage Explorer'],
                 "answer": 1,
-                "explanation": "Immutable storage con time-based retention policy en estado LOCKED garantiza: 1) Los blobs no pueden eliminarse ni modificarse durante el período de retención (WORM - Write Once Read Many), 2) El período de 7 años se aplica desde la creación/modificación del blob, 3) Una vez LOCKED, la política no puede reducirse ni eliminarse. Soft delete permite recuperación pero no previene eliminación. Legal hold no tiene fecha de expiración definida. El estado LOCKED es crítico - sin él, la política puede modificarse."
+                "explanation": "Con 100 Mbps, transferir 60 TB tomaría aproximadamente 55 días (60TB × 8 / 0.1Gbps / 86400). Azure Data Box es un dispositivo físico que Microsoft envía, se cargan los datos localmente (encriptados), y se envía de vuelta a Microsoft para cargar a Azure. Puede transferir hasta 80 TB por dispositivo en días. Es la única opción viable para cumplir el deadline de 2 semanas."
             },
             {
                 "id": 7,
                 "type": "single",
-                "question": """Necesita migrar 80 TB de datos desde un datacenter on-premises a Azure Blob Storage.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Restricciones:
-- Ancho de banda de Internet: 100 Mbps (compartido con otras aplicaciones)
-- Ventana de migración: máximo 2 semanas
-- Los datos contienen información sensible (PII)
+Contoso tiene una cuenta de almacenamiento con un blob en el tier Archive. Se necesita acceso urgente al blob para una auditoría.
 
-Cálculo aproximado: 80 TB a 100 Mbps = ~74 días de transferencia continua
-
-¿Qué solución de migración debe usar?""",
-                "options": [
-                    "AzCopy sobre Internet con múltiples hilos",
-                    "Azure Data Box (dispositivo de 100 TB)",
-                    "Azure File Sync",
-                    "Azure Storage Explorer con conexión ExpressRoute"
-                ],
-                "answer": 1,
-                "explanation": "Azure Data Box es la solución correcta porque: 1) Dispositivo físico de 100 TB (suficiente para 80 TB), 2) Microsoft envía el dispositivo, se copian los datos localmente, se envía de vuelta, y Microsoft carga los datos a Azure, 3) Tiempo total típico: 7-10 días incluyendo envío, 4) Los datos están cifrados con AES-256 durante el transporte, 5) Cumple con la ventana de 2 semanas. AzCopy a 100 Mbps tomaría más de 2 meses. ExpressRoute requeriría provisioning adicional."
+¿Qué debe hacer y cuál es el tiempo estimado?""",
+                "options": ['Acceder directamente al blob; disponible inmediatamente', 'Cambiar el tier a Hot; disponible en minutos', 'Rehidratar el blob con prioridad Standard; disponible en hasta 15 horas', 'Rehidratar el blob con prioridad High; disponible en menos de 1 hora para blobs < 10 GB'],
+                "answer": 3,
+                "explanation": "Los blobs en Archive tier no pueden accederse directamente; deben rehidratarse a Hot o Cool tier primero. Con prioridad High (disponible para blobs < 10 GB), la rehidratación puede completarse en menos de 1 hora. Con prioridad Standard, puede tomar hasta 15 horas. El costo de rehidratación con High priority es mayor."
             },
             {
                 "id": 8,
-                "type": "single",
-                "question": """Tiene un servidor de archivos Windows on-premises con 2 TB de datos.
+                "type": "multiple",
+                "question": """ESCENARIO: Litware, Inc.
 
-Requisitos:
-- Sincronizar archivos con Azure Files para backup y DR
-- Mantener archivos accedidos frecuentemente en caché local
-- Archivos raramente accedidos deben moverse a la nube automáticamente
-- Los usuarios deben poder acceder a todos los archivos como si estuvieran locales
+Litware necesita configurar seguridad para una cuenta de almacenamiento que contiene datos sensibles.
 
-¿Qué debe implementar?""",
-                "options": [
-                    "Azure Backup con Recovery Services vault",
-                    "Azure File Sync con cloud tiering habilitado",
-                    "Robocopy programado para copiar a Azure Files",
-                    "Azure Data Box Gateway"
-                ],
-                "answer": 1,
-                "explanation": "Azure File Sync con cloud tiering es la solución correcta: 1) Sincroniza archivos bidireccionales entre servidor on-premises y Azure Files, 2) Cloud tiering mantiene archivos frecuentes localmente y mueve los menos usados a Azure (solo metadata y punteros locales), 3) Los archivos tiered aparecen normalmente en el servidor pero se descargan on-demand cuando se acceden, 4) Proporciona DR porque los datos están en Azure. Azure Backup es solo para backup, no sincronización activa. Robocopy no proporciona cloud tiering."
+Los requisitos son:
+- Solo VMs en la VNet corporativa pueden acceder a la cuenta de almacenamiento
+- Los datos deben estar encriptados con claves controladas por Litware
+- El acceso desde Internet público debe estar bloqueado
+
+¿Qué DOS configuraciones debe implementar? (Seleccione dos)""",
+                "options": ['Configurar Storage Firewall y agregar la VNet', 'Habilitar Customer-Managed Keys (CMK) con Azure Key Vault', 'Configurar acceso anónimo a nivel de cuenta', 'Cambiar la redundancia a GRS'],
+                "answer": [0, 1],
+                "explanation": "Storage Firewall permite restringir el acceso a VNets específicas y bloquear acceso público. Customer-Managed Keys (CMK) permite usar sus propias claves de Azure Key Vault para el cifrado, dando control total sobre las claves. El acceso anónimo haría lo contrario de lo requerido. GRS es para redundancia, no seguridad."
             },
             {
                 "id": 9,
                 "type": "single",
-                "question": """Tiene la siguiente configuración:
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Storage Account: stcontoso (firewall habilitado)
-- Allowed networks: VNet-Prod (10.1.0.0/16)
+Fabrikam tiene un servidor de archivos Windows on-premises con 2 TB de datos. Necesitan:
 
-VNet-Dev (10.2.0.0/16) contiene una VM llamada VM-Dev que necesita acceder a stcontoso.
-VNet-Dev NO está conectada a VNet-Prod.
+- Mantener los archivos accesibles localmente para acceso rápido
+- Sincronizar los archivos con Azure Files
+- Liberar espacio en el servidor local moviendo archivos poco usados a la nube
+- Los usuarios deben ver todos los archivos aunque estén en la nube
 
-Error actual: "This request is not authorized to perform this operation"
-
-¿Qué debe configurar para permitir el acceso desde VM-Dev?""",
-                "options": [
-                    "Crear VNet peering entre VNet-Dev y VNet-Prod",
-                    "Agregar la subnet de VM-Dev a las reglas de firewall de la cuenta de almacenamiento",
-                    "Habilitar Service Endpoint para Microsoft.Storage en la subnet de VNet-Dev",
-                    "Combinar B y C: Habilitar Service Endpoint Y agregar la subnet a las reglas de firewall"
-                ],
-                "answer": 3,
-                "explanation": "Se requieren AMBOS pasos: 1) Habilitar Service Endpoint para Microsoft.Storage en la subnet de VNet-Dev - esto permite que el tráfico use la red backbone de Azure en lugar de Internet público, 2) Agregar esa subnet a las reglas de firewall de la cuenta de almacenamiento - esto autoriza el tráfico desde esa subnet. Solo crear VNet peering no funcionaría porque el firewall bloquea todo excepto las redes explícitamente permitidas. Solo agregar la subnet no funciona sin el Service Endpoint habilitado."
+¿Qué debe implementar?""",
+                "options": ['Azure Backup', 'Azure File Sync con Cloud Tiering habilitado', 'AzCopy con sincronización programada', 'Robocopy a Azure Blob Storage'],
+                "answer": 1,
+                "explanation": "Azure File Sync sincroniza servidores Windows con Azure Files. Cloud Tiering es una característica opcional que convierte archivos poco accedidos en stubs (punteros) que se descargan on-demand, liberando espacio local mientras los usuarios ven todos los archivos. Azure Backup es para respaldos, no sincronización. AzCopy y Robocopy no proporcionan tiering."
             },
             {
                 "id": 10,
                 "type": "single",
-                "question": """Tiene blobs almacenados en Archive tier en una cuenta de Azure Storage.
+                "question": """ESCENARIO: Woodgrove Bank
 
-Un auditor necesita acceso urgente a un blob específico (audit-2023-q1.zip, 50 GB) que está en Archive tier. El auditor necesita el archivo lo antes posible.
+Woodgrove Bank eliminó accidentalmente un blob importante hace 3 días. La cuenta de almacenamiento tiene soft delete habilitado con retención de 14 días.
 
-¿Cuál es la opción MÁS RÁPIDA para obtener acceso al blob?""",
-                "options": [
-                    "Acceder directamente al blob - Archive tier permite acceso inmediato",
-                    "Rehidratar el blob con prioridad Standard (hasta 15 horas)",
-                    "Rehidratar el blob con prioridad High (típicamente menos de 1 hora)",
-                    "Copiar el blob a otra cuenta de almacenamiento"
-                ],
-                "answer": 2,
-                "explanation": "Los blobs en Archive tier NO pueden accederse directamente - deben rehidratarse primero a Hot o Cool tier. La opción más rápida es rehidratación con prioridad High, que típicamente completa en menos de 1 hora para blobs de menos de 10 GB y puede tomar más para blobs más grandes pero sigue siendo mucho más rápido que Standard. Standard priority puede tomar hasta 15 horas. Copiar el blob no es posible directamente desde Archive sin rehidratación."
+¿Cómo puede recuperar el blob?""",
+                "options": ['Restaurar desde Azure Backup', 'Usar la operación Undelete desde el portal de Azure o código', 'Contactar a Microsoft Support para recuperar el blob', 'El blob no puede recuperarse después de 24 horas'],
+                "answer": 1,
+                "explanation": "Con soft delete habilitado, los blobs eliminados se mantienen en estado 'soft deleted' durante el período de retención configurado (14 días en este caso). Pueden recuperarse usando la operación Undelete desde Azure Portal, PowerShell, Azure CLI, o código. No se necesita backup separado ni contactar a soporte."
             },
             {
                 "id": 11,
                 "type": "single",
-                "question": """Está creando una cuenta de almacenamiento para un proyecto de big data analytics.
+                "question": """ESCENARIO: A. Datum Corporation
 
-Requisitos:
-- Almacenar petabytes de datos estructurados y no estructurados
-- Soporte para procesamiento con Apache Spark, Databricks y HDInsight
-- Organización jerárquica de datos (directorios y subdirectorios)
-- Permisos granulares a nivel de directorio usando ACLs
-- Compatible con HDFS (Hadoop Distributed File System)
+A. Datum necesita configurar una cuenta de almacenamiento para Azure Data Lake Storage Gen2 para análisis de big data.
 
-¿Qué debe habilitar al crear la cuenta de almacenamiento?""",
-                "options": [
-                    "Large file shares",
-                    "Hierarchical namespace",
-                    "NFS 3.0 protocol support",
-                    "SFTP support"
-                ],
+¿Qué debe habilitar durante la creación de la cuenta de almacenamiento?""",
+                "options": ['Large file shares', 'Hierarchical namespace', 'NFS 3.0 protocol', 'SFTP'],
                 "answer": 1,
-                "explanation": "Hierarchical namespace habilita Azure Data Lake Storage Gen2, que proporciona: 1) Sistema de archivos jerárquico real con directorios (no pseudo-directorios como Blob Storage estándar), 2) ACLs POSIX para permisos granulares, 3) Compatibilidad con HDFS para herramientas de big data (Spark, Databricks, HDInsight), 4) Rendimiento optimizado para analytics. Large file shares es para Azure Files. NFS 3.0 y SFTP son protocolos de acceso pero no proporcionan las capacidades de Data Lake."
+                "explanation": "Hierarchical namespace es el requisito para habilitar Azure Data Lake Storage Gen2. Proporciona un sistema de archivos jerárquico real (directorios, permisos a nivel de archivo) sobre Blob Storage, necesario para operaciones eficientes de big data como rename atómico de directorios. Las otras opciones son características separadas que no habilitan ADLS Gen2."
             },
             {
                 "id": 12,
                 "type": "single",
-                "question": """La cuenta de almacenamiento stcontoso tiene la siguiente configuración:
+                "question": """ESCENARIO: Contoso, Ltd.
 
-- Blob soft delete: Habilitado (14 días de retención)
-- Container soft delete: Habilitado (7 días de retención)
-- Versioning: Deshabilitado
+Contoso tiene dos cuentas de almacenamiento en regiones diferentes:
 
-Un administrador ejecutó el siguiente comando por error hace 2 días:
+| Cuenta | Región | Propósito |
+|--------|--------|-----------|
+| contosoprod | East US | Producción |
+| contosodr | West US | DR |
 
-Remove-AzStorageBlob -Container "reports" -Blob "financial-report-2023.xlsx"
+Necesita copiar blobs de contosoprod a contosodr de forma asíncrona, sin descargar los datos al cliente.
 
-¿Cómo puede recuperar el archivo?""",
-                "options": [
-                    "No es posible recuperar el archivo",
-                    "Restaurar desde Azure Backup",
-                    "Usar la opción 'Undelete' en el blob soft-deleted desde el portal o PowerShell",
-                    "Contactar Microsoft Support para recuperación de emergencia"
-                ],
-                "answer": 2,
-                "explanation": "Con soft delete habilitado, los blobs eliminados no se borran permanentemente de inmediato. Se mantienen en estado 'soft-deleted' durante el período de retención (14 días en este caso). Como solo han pasado 2 días, el blob puede recuperarse usando: 1) Azure Portal: navegar al contenedor, mostrar blobs eliminados, seleccionar y hacer 'Undelete', 2) PowerShell: Get-AzStorageBlob -Container reports -Blob financial-report-2023.xlsx -IncludeDeleted | Undelete-AzStorageBlob. No se requiere Azure Backup si soft delete está configurado."
+¿Qué método debe usar?""",
+                "options": ['AzCopy sync desde una VM', 'Copy Blob API (Start-AzStorageBlobCopy)', 'Azure Storage Explorer drag and drop', 'Object Replication'],
+                "answer": 3,
+                "explanation": "Object Replication copia blobs asincrónicamente entre cuentas de almacenamiento sin intervención del cliente. Los datos se copian directamente entre cuentas en el backend de Azure. Copy Blob API también es asíncrono y server-side, pero Object Replication es para replicación continua automática. AzCopy y Storage Explorer requieren un cliente intermediario."
             },
             {
                 "id": 13,
-                "type": "multiple",
-                "question": """Tiene una aplicación web (WebApp1) que necesita:
-1. Escribir archivos de log a Azure Blob Storage
-2. Los logs deben ser accesibles públicamente para un sistema de monitoreo externo que no tiene credenciales de Azure
+                "type": "single",
+                "question": """ESCENARIO: Tailwind Traders
 
-La cuenta de almacenamiento stlogs tiene un contenedor llamado "applogs".
+Tailwind Traders tiene una aplicación que necesita almacenar millones de mensajes pequeños para procesamiento asíncrono.
 
-¿Cuáles DOS configuraciones debe realizar? (Seleccione dos)""",
-                "options": [
-                    "Configurar el nivel de acceso público del contenedor a 'Blob (anonymous read access for blobs only)'",
-                    "Habilitar Static Website hosting en la cuenta de almacenamiento",
-                    "Asignar el rol 'Storage Blob Data Contributor' a la Managed Identity de WebApp1",
-                    "Deshabilitar 'Require secure transfer' en la cuenta de almacenamiento"
-                ],
-                "answer": [0, 2],
-                "explanation": "Se necesitan dos configuraciones: 1) Asignar 'Storage Blob Data Contributor' a la Managed Identity de WebApp1 - esto permite que la aplicación escriba logs usando autenticación de identidad administrada (más seguro que access keys), 2) Configurar acceso público a nivel de blob en el contenedor - esto permite que el sistema de monitoreo externo lea los logs sin autenticación. Static Website no es necesario para este escenario. Deshabilitar secure transfer reduciría la seguridad innecesariamente."
+Los requisitos son:
+- Procesamiento FIFO garantizado
+- Detección de mensajes duplicados
+- Soporte para transacciones
+
+¿Qué servicio debe usar?""",
+                "options": ['Azure Queue Storage', 'Azure Service Bus Queue', 'Azure Event Hub', 'Azure Event Grid'],
+                "answer": 1,
+                "explanation": "Azure Service Bus Queue proporciona FIFO garantizado (con sesiones), detección de duplicados, y soporte para transacciones. Azure Queue Storage es más simple y económico pero NO garantiza FIFO estricto ni tiene detección de duplicados. Event Hub es para streaming de eventos de alto volumen. Event Grid es para eventos reactivos, no colas de mensajes."
             },
             {
                 "id": 14,
                 "type": "single",
-                "question": """Necesita copiar blobs desde una cuenta de almacenamiento (stsource) a otra cuenta (stdestination).
+                "question": """ESCENARIO: Litware, Inc.
 
-Requisitos:
-- Ambas cuentas están en la misma región
-- Los datos deben copiarse de forma asíncrona
-- El proceso de copia debe manejarse completamente por Azure (server-side)
-- No debe consumir ancho de banda del cliente
-- Necesita poder monitorear el progreso de la copia
+Litware tiene una cuenta de almacenamiento con el firewall habilitado, permitiendo solo la VNet VNet-Prod.
 
-¿Qué operación debe usar?""",
-                "options": [
-                    "AzCopy sync desde línea de comandos local",
-                    "Copy Blob operation (Start-AzStorageBlobCopy en PowerShell)",
-                    "Azure Data Factory Copy Activity",
-                    "Storage Explorer drag and drop"
-                ],
-                "answer": 1,
-                "explanation": "Copy Blob operation (Start-AzStorageBlobCopy) es una operación asíncrona server-side que: 1) Copia datos directamente entre cuentas de almacenamiento en la infraestructura de Azure, 2) No requiere descargar/subir datos a través del cliente, 3) Devuelve inmediatamente y la copia continúa en background, 4) El estado puede monitorearse con Get-AzStorageBlobCopyState. AzCopy descarga/sube a través del cliente. Data Factory es más complejo de lo necesario para copia simple. Storage Explorer también usa ancho de banda del cliente."
+Una aplicación en otra VNet (VNet-Dev) necesita acceder a la cuenta de almacenamiento sin deshabilitar el firewall.
+
+¿Qué puede configurar? (Seleccione la opción más apropiada)""",
+                "options": ['Agregar VNet-Dev al firewall de la cuenta de almacenamiento', 'Crear un Private Endpoint en VNet-Dev', 'Configurar VNet Peering entre VNet-Prod y VNet-Dev', 'A o B son opciones válidas'],
+                "answer": 3,
+                "explanation": "Ambas opciones son válidas: 1) Agregar VNet-Dev al firewall usando Service Endpoints permite tráfico desde esa VNet. 2) Private Endpoint crea una interfaz de red privada en VNet-Dev con IP privada para la cuenta de almacenamiento. VNet Peering solo no es suficiente; también necesitaría Service Endpoint o Private Endpoint."
             },
             {
                 "id": 15,
                 "type": "single",
-                "question": """Su aplicación necesita procesar mensajes de manera confiable con las siguientes características:
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-- Millones de mensajes por día
-- Procesamiento estrictamente en orden FIFO (First-In-First-Out)
-- Garantía de entrega exactamente una vez (exactly-once delivery)
-- Los mensajes pueden agruparse en sesiones (todos los mensajes de una transacción juntos)
-- Tamaño máximo de mensaje: 1 MB
+Fabrikam necesita configurar acceso a Azure Files para aplicaciones que usan identidades de Microsoft Entra.
 
-¿Qué servicio de Azure debe usar?""",
-                "options": [
-                    "Azure Blob Storage con lease",
-                    "Azure Queue Storage",
-                    "Azure Service Bus Queue con Sessions habilitadas",
-                    "Azure Table Storage"
-                ],
-                "answer": 2,
-                "explanation": "Azure Service Bus Queue con Sessions proporciona: 1) FIFO garantizado cuando se usan sesiones (los mensajes con el mismo SessionId se procesan en orden), 2) Entrega exactly-once con transacciones, 3) Soporte para mensajes hasta 256 KB (Standard) o 100 MB (Premium), 4) Sesiones para agrupar mensajes relacionados. Azure Queue Storage es más simple pero solo garantiza FIFO aproximado y at-least-once delivery. Blob Storage y Table Storage no son servicios de mensajería."
+Los requisitos son:
+- Las aplicaciones deben autenticarse usando Microsoft Entra ID
+- Los permisos deben configurarse a nivel de share y archivo/directorio
+- NO usar access keys
+
+¿Qué debe configurar?""",
+                "options": ['Shared Access Signatures (SAS)', 'Identity-based authentication con Microsoft Entra ID', 'Storage account access keys', 'Anonymous public access'],
+                "answer": 1,
+                "explanation": "Azure Files soporta identity-based authentication con Microsoft Entra ID (anteriormente Azure AD DS o Microsoft Entra Domain Services, y ahora también Microsoft Entra Kerberos para usuarios híbridos). Permite asignar permisos RBAC a nivel de share y permisos NTFS a nivel de archivo/directorio. SAS usa tokens, no identidades. Access keys dan acceso completo."
             }
         ]
     },
     "compute": {
-        "name": "Desplegar y Administrar Recursos de Cómputo",
+        "name": "Desplegar y Administrar Recursos de Cómputo de Azure",
         "percentage": "20-25%",
         "color": "#FF6B6B",
         "questions": [
             {
                 "id": 1,
                 "type": "single",
-                "question": """ESCENARIO: Contoso está desplegando una aplicación de producción crítica.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Requisitos de la aplicación:
-- SLA de 99.99% de disponibilidad
-- La aplicación debe continuar funcionando si un datacenter completo de Azure falla
-- La aplicación corre en VMs Windows Server
-- Se requieren al menos 2 instancias para alta disponibilidad
+Contoso está desplegando una aplicación crítica que requiere un SLA de 99.99% de disponibilidad.
 
-La región seleccionada es East US, que tiene 3 Availability Zones.
+La aplicación se ejecutará en máquinas virtuales en Azure.
 
-¿Qué configuración de disponibilidad cumple con los requisitos?""",
-                "options": [
-                    "Una VM con Premium SSD",
-                    "Múltiples VMs en un Availability Set (diferentes Fault Domains)",
-                    "Múltiples VMs distribuidas en diferentes Availability Zones",
-                    "Una VM en cada región de Azure (East US y West US)"
-                ],
+¿Qué configuración cumple con el requisito de SLA?""",
+                "options": ['Una VM con Premium SSD', 'Dos VMs en un Availability Set', 'Dos o más VMs en diferentes Availability Zones', 'Una VM con un disco Ultra'],
                 "answer": 2,
-                "explanation": "Para lograr 99.99% SLA se requieren múltiples VMs en diferentes Availability Zones. Availability Zones son datacenters físicamente separados dentro de una región, con energía, refrigeración y red independientes. Un Availability Set solo proporciona 99.95% SLA (protege contra fallas de rack/hardware, no de datacenter). Una sola VM con Premium SSD tiene 99.9% SLA. La distribución multi-región agrega complejidad innecesaria cuando las Availability Zones cumplen el requisito."
+                "explanation": "Para lograr 99.99% de SLA, se requieren dos o más VMs desplegadas en diferentes Availability Zones. Una sola VM tiene máximo 99.9% de SLA (con Premium SSD). Availability Sets proporcionan 99.95% de SLA. Availability Zones son ubicaciones físicamente separadas dentro de una región con energía, red y refrigeración independientes."
             },
             {
                 "id": 2,
                 "type": "single",
-                "question": """Tiene una VM de Azure llamada VM1 con la siguiente configuración:
+                "question": """ESCENARIO: Litware, Inc.
 
-| Propiedad | Valor |
-|-----------|-------|
-| Tamaño actual | Standard_D2s_v3 (2 vCPU, 8 GB RAM) |
-| Estado | Running |
-| Discos | OS: Premium SSD, Data: Standard SSD |
+Litware tiene una VM llamada VM1 con el tamaño Standard_D4s_v3. Necesitan cambiar el tamaño a Standard_D8s_v3.
 
-Necesita cambiar el tamaño a Standard_D4s_v3 (4 vCPU, 16 GB RAM) para manejar mayor carga.
+VM1 está actualmente en ejecución.
 
-¿Qué sucederá cuando cambie el tamaño de la VM?""",
-                "options": [
-                    "El cambio se aplicará sin interrupción (hot resize)",
-                    "La VM se reiniciará para aplicar el nuevo tamaño",
-                    "La VM se detendrá permanentemente y deberá iniciarla manualmente",
-                    "Se creará una nueva VM con el nuevo tamaño y la original se eliminará"
-                ],
+¿Qué sucederá cuando cambie el tamaño?""",
+                "options": ['La VM se redimensionará sin interrupción', 'La VM se reiniciará durante el proceso', 'La VM se eliminará y se creará una nueva', 'El cambio fallará; debe detener la VM primero'],
                 "answer": 1,
-                "explanation": "Cuando redimensiona una VM en ejecución, Azure la reiniciará automáticamente. El proceso es: 1) Azure apaga la VM (graceful shutdown), 2) Realoca recursos para el nuevo tamaño, 3) Reinicia la VM automáticamente. La IP privada se mantiene. La IP pública dinámica podría cambiar (use IP estática para evitarlo). El reinicio típicamente toma unos minutos. Los datos en los discos no se afectan."
+                "explanation": "Cuando se redimensiona una VM en ejecución, Azure la reiniciará para aplicar el nuevo tamaño. Si el nuevo tamaño no está disponible en el cluster actual, la VM debe ser desasignada (deallocated) primero. En este caso, Standard_D8s_v3 está en la misma familia que D4s_v3, así que probablemente solo reiniciará."
             },
             {
                 "id": 3,
                 "type": "single",
-                "question": """Está desplegando múltiples VMs Windows Server usando una plantilla ARM.
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Requisitos de configuración post-despliegue:
-- Instalar IIS en todas las VMs
-- Configurar el firewall de Windows
-- Copiar archivos de configuración desde un Storage Account
-- Unir las VMs al dominio de Active Directory
+Fabrikam necesita ejecutar un script de configuración automáticamente cada vez que se despliega una nueva VM desde una imagen.
 
-La configuración debe ejecutarse automáticamente sin intervención manual después del despliegue.
+El script debe:
+- Instalar software adicional
+- Configurar el sistema operativo
+- Ejecutarse sin intervención manual
 
 ¿Qué debe usar?""",
-                "options": [
-                    "Boot diagnostics para verificar el proceso de arranque",
-                    "Custom Script Extension para ejecutar un script de PowerShell",
-                    "Run Command para ejecutar comandos después del despliegue",
-                    "Serial Console para acceder a la consola de la VM"
-                ],
+                "options": ['Run Command', 'Custom Script Extension', 'Boot diagnostics', 'Serial Console'],
                 "answer": 1,
-                "explanation": "Custom Script Extension es la solución correcta porque: 1) Se ejecuta automáticamente durante o inmediatamente después del despliegue de la VM, 2) Puede descargar scripts desde Azure Storage o URLs públicas, 3) Ejecuta scripts de PowerShell (Windows) o Bash (Linux), 4) Se puede incluir en plantillas ARM para despliegue repetible. Run Command es para ejecución manual/ad-hoc. Boot diagnostics es solo para troubleshooting. Serial Console es para acceso interactivo de emergencia."
+                "explanation": "Custom Script Extension permite ejecutar scripts automáticamente durante o después del despliegue de VMs. Los scripts pueden descargarse desde Azure Storage, GitHub, o cualquier URL. Se integra con plantillas ARM/Bicep para automatización completa. Run Command es para ejecución ad-hoc. Boot diagnostics es para diagnóstico. Serial Console es para acceso de consola."
             },
             {
                 "id": 4,
                 "type": "single",
-                "question": """Necesita ejecutar un job de procesamiento por lotes que:
+                "question": """ESCENARIO: A. Datum Corporation
 
-- Ejecuta en un contenedor Docker
-- Se ejecuta una vez al día durante aproximadamente 30 minutos
-- Procesa archivos de Azure Blob Storage
-- No requiere orquestación compleja
-- Debe minimizar costos (pago solo por tiempo de ejecución)
+A. Datum tiene una VM que no puede arrancar después de una actualización del sistema operativo.
 
-¿Qué servicio de Azure debe usar?""",
-                "options": [
-                    "Azure Virtual Machine con Docker instalado",
-                    "Azure Kubernetes Service (AKS)",
-                    "Azure Container Instances (ACI)",
-                    "Azure App Service for Containers"
-                ],
+El equipo de IT no puede conectarse via RDP porque la VM no completa el arranque.
+
+¿Qué herramienta debe usar para diagnosticar y solucionar el problema?""",
+                "options": ['Azure Bastion', 'Network Watcher', 'Serial Console', 'Run Command'],
                 "answer": 2,
-                "explanation": "Azure Container Instances (ACI) es la mejor opción porque: 1) Es serverless - no hay servidores que administrar, 2) Facturación por segundo de ejecución (solo paga los ~30 minutos de ejecución diaria), 3) Inicio rápido de contenedores (segundos), 4) Ideal para jobs batch y tareas de corta duración, 5) Integración fácil con Azure Storage. VMs tienen costo continuo y requieren gestión. AKS es excesivo para un job simple y tiene costo del cluster. App Service tiene costo del plan incluso sin uso."
+                "explanation": "Serial Console proporciona acceso de consola de texto a una VM, útil cuando RDP/SSH no funcionan debido a problemas de arranque, configuración de red o sistema operativo corrupto. Permite interactuar con el bootloader y el sistema operativo en modo texto. Bastion requiere que la VM responda. Run Command requiere que el agente de VM funcione."
             },
             {
                 "id": 5,
                 "type": "single",
-                "question": """Una VM Windows llamada VM-Prod01 no responde después de instalar un nuevo driver de red.
+                "question": """ESCENARIO: Tailwind Traders
 
-Síntomas:
-- RDP no conecta (timeout)
-- El ping a la IP privada no responde
-- El portal de Azure muestra la VM como "Running"
-- Boot diagnostics muestra que Windows arrancó pero la pantalla de login no aparece
+Tailwind Traders necesita ejecutar contenedores Docker para procesar trabajos batch de corta duración.
 
-Necesita acceder a la VM para desinstalar el driver problemático.
+Los requisitos son:
+- No gestionar infraestructura de servidores
+- Pagar solo por el tiempo de ejecución
+- Iniciar contenedores rápidamente bajo demanda
 
-¿Qué herramienta debe usar?""",
-                "options": [
-                    "Azure Bastion para conectar via RDP en el navegador",
-                    "Serial Console para acceder a la consola de comandos",
-                    "Run Command para ejecutar scripts remotamente",
-                    "Reiniciar la VM desde el portal de Azure"
-                ],
+¿Qué servicio debe usar?""",
+                "options": ['Azure Kubernetes Service (AKS)', 'Azure Container Instances (ACI)', 'Azure App Service for Containers', 'Virtual Machines con Docker'],
                 "answer": 1,
-                "explanation": "Serial Console es la herramienta correcta porque: 1) Proporciona acceso a la consola de la VM a través de una conexión serial, independiente de la red, 2) Funciona incluso cuando RDP/SSH no funcionan debido a problemas de red o configuración, 3) Permite acceder a CMD o PowerShell para troubleshooting, 4) Puede usarse para deshabilitar drivers, modificar configuración de red, etc. Azure Bastion también usa la red de la VM (no funcionaría). Run Command requiere que el VM Agent esté respondiendo. Reiniciar probablemente no resolvería el problema del driver."
+                "explanation": "Azure Container Instances (ACI) es un servicio serverless para ejecutar contenedores sin gestionar VMs ni orquestadores. Factura por segundo de ejecución, inicia en segundos, e ideal para cargas batch, tareas programadas o procesamiento de eventos. AKS requiere gestión del cluster. App Service tiene instancias siempre activas. VMs requieren gestión de infraestructura."
             },
             {
                 "id": 6,
                 "type": "single",
-                "question": """Está desplegando una aplicación web en Azure App Service.
+                "question": """ESCENARIO: Woodgrove Bank
 
-Requisitos:
-- Configurar auto-scaling basado en uso de CPU
-- Desplegar a 5 deployment slots para CI/CD
-- Usar dominio personalizado con SSL
-- Ejecutar WebJobs continuos
+Woodgrove Bank tiene un App Service Plan en el tier Standard S1. La aplicación web experimenta picos de tráfico predecibles cada lunes de 9am a 12pm.
 
-¿Cuál es el tier MÍNIMO de App Service Plan que cumple con TODOS los requisitos?""",
-                "options": [
-                    "Free (F1)",
-                    "Basic (B1)",
-                    "Standard (S1)",
-                    "Premium (P1v2)"
-                ],
+Necesita configurar auto-scaling para manejar los picos de forma económica.
+
+¿Qué tipo de scaling debe configurar?""",
+                "options": ['Scale up manual a un tier más alto', 'Scale out basado en métrica de CPU', 'Scale out programado para lunes 9am-12pm', 'Scale out basado en métricas Y programado'],
                 "answer": 2,
-                "explanation": "Standard (S1) es el tier mínimo que cumple TODOS los requisitos: 1) Auto-scaling: Standard y superiores, 2) Deployment slots: Standard permite 5 slots, Basic no tiene slots, 3) Custom domains con SSL: Todos los tiers pagados (Basic y superiores), 4) WebJobs continuos: Basic y superiores. Free no soporta custom domains ni WebJobs continuos. Basic no tiene auto-scaling ni deployment slots. Standard (S1) cumple todos los requisitos con el costo mínimo."
+                "explanation": "Para picos de tráfico predecibles con horario conocido, scale out programado es la mejor opción. Configura reglas que aumentan las instancias automáticamente en el horario especificado (lunes 9am) y las reducen después (12pm). El scaling basado en métricas es mejor para tráfico impredecible. Combinar ambos es válido pero más complejo para este escenario simple."
             },
             {
                 "id": 7,
                 "type": "single",
-                "question": """Tiene una VM con un disco OS de 128 GB (Premium SSD P10).
+                "question": """ESCENARIO: Contoso, Ltd.
 
-La partición de Windows está quedando sin espacio y necesita expandir el disco OS a 256 GB.
+Contoso necesita desplegar una aplicación web .NET 6 en Azure App Service.
 
-¿Cuáles son los pasos correctos para expandir el disco OS?""",
-                "options": [
-                    "Desde el portal, expandir el disco mientras la VM está Running",
-                    "1) Deallocate la VM, 2) Expandir el disco desde el portal, 3) Start la VM, 4) Extender la partición dentro de Windows",
-                    "Crear un nuevo disco de 256 GB, copiar datos, y reemplazar el disco OS",
-                    "Expandir directamente desde Disk Management dentro de Windows sin cambios en Azure"
-                ],
-                "answer": 1,
-                "explanation": "El proceso correcto es: 1) DEALLOCATE la VM (Stop-AzVM -ResourceGroupName RG -Name VM -Force), 2) Expandir el disco en Azure Portal o PowerShell (Update-AzDisk), 3) START la VM, 4) Dentro de Windows, usar Disk Management o diskpart para extender la partición al nuevo tamaño. No puede expandir un disco OS mientras la VM está running. La expansión en Azure solo aumenta el tamaño del disco virtual; el sistema operativo debe reconocer y usar el espacio adicional."
+La aplicación requiere:
+- Auto-scaling basado en demanda
+- Slots de deployment para staging
+- Backups diarios automatizados
+
+¿Cuál es el tier MÍNIMO de App Service Plan requerido?""",
+                "options": ['Free (F1)', 'Basic (B1)', 'Standard (S1)', 'Premium (P1v2)'],
+                "answer": 2,
+                "explanation": "Standard (S1) es el tier mínimo que soporta auto-scaling, deployment slots (hasta 5), y backups diarios (hasta 10 por día). Basic soporta hasta 3 instancias pero manual scaling, sin slots ni backups automatizados. Free es muy limitado. Premium agrega más slots, más backups, y otras características enterprise."
             },
             {
                 "id": 8,
                 "type": "single",
-                "question": """Está evaluando Azure Kubernetes Service (AKS) para su organización.
+                "question": """ESCENARIO: Litware, Inc.
 
-Su equipo pregunta: "¿Qué componentes de Kubernetes administra Microsoft y cuáles administramos nosotros?"
+Litware tiene una VM con un disco OS de 128 GB que necesita expandirse a 256 GB.
 
-¿Cuál es la responsabilidad de administración correcta en AKS?""",
-                "options": [
-                    "Microsoft administra todo: control plane, worker nodes, y aplicaciones",
-                    "Microsoft administra el control plane; usted administra worker nodes y aplicaciones",
-                    "Usted administra todo, Microsoft solo proporciona la infraestructura de red",
-                    "Microsoft administra worker nodes; usted administra el control plane y aplicaciones"
-                ],
+¿Cuáles son los pasos correctos?""",
+                "options": ['Expandir el disco desde el portal mientras la VM está en ejecución', 'Detener (deallocate) la VM, expandir el disco, iniciar la VM, extender la partición en el OS', 'Crear un snapshot, crear un nuevo disco de 256 GB desde el snapshot', 'Agregar un nuevo disco de datos de 128 GB'],
                 "answer": 1,
-                "explanation": "En AKS, Microsoft administra el Control Plane (API server, etcd, scheduler, controller manager) SIN COSTO ADICIONAL - usted no tiene acceso directo a estos componentes. Usted es responsable de: 1) Worker nodes (aunque Azure ayuda con actualizaciones), 2) Pods y aplicaciones, 3) Configuración de red y seguridad de aplicaciones, 4) Persistent volumes y almacenamiento. Solo paga por los worker nodes (VMs) que usa."
+                "explanation": "Para expandir un disco OS managed: 1) Deallocate la VM (no solo detener), 2) Expandir el disco en el portal/CLI/PowerShell, 3) Iniciar la VM, 4) Dentro del sistema operativo, extender la partición/volumen para usar el espacio adicional. Los discos de datos pueden expandirse sin deallocate en muchos casos, pero discos OS requieren deallocate."
             },
             {
                 "id": 9,
                 "type": "single",
-                "question": """Tiene una aplicación web en Azure App Service que necesita acceder a secretos almacenados en Azure Key Vault.
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Requisitos de seguridad:
-- NO almacenar credenciales en código ni configuración
-- Las credenciales NO deben requerir rotación manual
-- Usar el principio de privilegio mínimo
-- La aplicación debe poder leer secretos pero NO modificarlos
+Fabrikam quiere crear una imagen personalizada de una VM para usarla como plantilla para múltiples VMs.
 
-¿Qué configuración debe implementar?""",
-                "options": [
-                    "Almacenar la connection string de Key Vault en App Settings",
-                    "Crear un Service Principal, guardar el secreto en App Settings, y asignar 'Key Vault Administrator' role",
-                    "Habilitar System-Assigned Managed Identity y asignar 'Key Vault Secrets User' role",
-                    "Usar las Access Keys de Key Vault en el código de la aplicación"
-                ],
-                "answer": 2,
-                "explanation": "System-Assigned Managed Identity con 'Key Vault Secrets User' role es la configuración correcta: 1) Managed Identity no requiere credenciales en código - Azure gestiona automáticamente, 2) Las credenciales rotan automáticamente, 3) 'Key Vault Secrets User' permite solo LEER secretos (Get, List) - privilegio mínimo, 4) 'Key Vault Administrator' tendría permisos excesivos (puede modificar/eliminar). Service Principal requiere gestión de secretos. Access Keys dan demasiados permisos."
+La imagen debe incluir el sistema operativo Windows Server 2022 con aplicaciones preinstaladas.
+
+¿Cuál es el proceso correcto?""",
+                "options": ['Crear un snapshot del disco OS y usarlo como imagen', 'Ejecutar Sysprep en la VM, deallocate, marcar como generalizada, capturar imagen', 'Copiar el disco VHD a otra cuenta de almacenamiento', 'Exportar la VM a un archivo OVF'],
+                "answer": 1,
+                "explanation": "Para crear una imagen generalizada reutilizable: 1) Ejecutar Sysprep /generalize /oobe /shutdown en Windows (o waagent -deprovision en Linux), 2) Deallocate la VM, 3) Marcarla como generalizada (Set-AzVm -Generalized), 4) Capturar como imagen (New-AzImage o desde portal). Las imágenes generalizadas permiten crear VMs con identidades únicas."
             },
             {
                 "id": 10,
-                "type": "single",
-                "question": """Necesita crear VMs desde una imagen personalizada que incluya:
+                "type": "multiple",
+                "question": """ESCENARIO: A. Datum Corporation
 
-- Windows Server 2022
-- IIS preinstalado y configurado
-- Software corporativo preinstalado
-- Configuraciones de seguridad aplicadas
+A. Datum está configurando un Virtual Machine Scale Set (VMSS) para una aplicación web.
 
-Esta imagen será usada para crear múltiples VMs idénticas en diferentes regiones.
+Necesitan:
+- Aumentar instancias automáticamente cuando CPU > 75%
+- Reducir instancias cuando CPU < 25%
+- Mínimo 2 instancias, máximo 10 instancias
 
-¿Cuál es el proceso correcto para crear esta imagen?""",
-                "options": [
-                    "Crear un snapshot del disco OS de una VM configurada",
-                    "Ejecutar Sysprep en la VM, generalizarla, deallocate, y capturar como imagen",
-                    "Exportar el VHD de la VM a una cuenta de almacenamiento",
-                    "Clonar la VM usando Azure Site Recovery"
-                ],
-                "answer": 1,
-                "explanation": "El proceso correcto para Windows es: 1) Configurar la VM con todo el software y configuraciones necesarias, 2) Ejecutar Sysprep con /generalize para eliminar información específica de la máquina (SID, nombre de computadora, etc.), 3) Deallocate la VM en Azure, 4) Capturar como imagen (Capture en portal o New-AzImage). La imagen resultante puede usarse para crear múltiples VMs con configuraciones únicas. Un snapshot solo copia el disco, no crea una imagen generalizada. El VHD exportado requiere procesamiento adicional."
+¿Qué DOS configuraciones son REQUERIDAS para auto-scaling? (Seleccione dos)""",
+                "options": ['Regla de scale out (aumentar instancias)', 'Regla de scale in (reducir instancias)', 'Load Balancer', 'Application Gateway'],
+                "answer": [0, 1],
+                "explanation": "Para auto-scaling efectivo basado en métricas se requieren: 1) Regla de scale out para aumentar capacidad bajo carga alta, 2) Regla de scale in para reducir capacidad y costos cuando la demanda baja. Load Balancer es recomendado para distribuir tráfico pero no es técnicamente requerido para que auto-scaling funcione."
             },
             {
                 "id": 11,
-                "type": "multiple",
-                "question": """Tiene un Virtual Machine Scale Set (VMSS) que hospeda una aplicación web.
+                "type": "single",
+                "question": """ESCENARIO: Tailwind Traders
 
-Requisitos de auto-scaling:
-- Aumentar instancias cuando CPU promedio > 70% por 5 minutos
-- Reducir instancias cuando CPU promedio < 30% por 10 minutos
-- Mínimo 2 instancias, máximo 10 instancias
+Tailwind Traders tiene una aplicación en App Service que necesita acceder a secretos en Azure Key Vault.
 
-¿Cuáles DOS configuraciones de scaling debe crear? (Seleccione dos)""",
-                "options": [
-                    "Regla de Scale OUT: Si CPU > 70% durante 5 min, aumentar en 1 instancia",
-                    "Configurar Azure Load Balancer con health probes",
-                    "Regla de Scale IN: Si CPU < 30% durante 10 min, reducir en 1 instancia",
-                    "Habilitar Accelerated Networking en las instancias"
-                ],
-                "answer": [0, 2],
-                "explanation": "Para auto-scaling efectivo necesita DOS tipos de reglas: 1) Scale OUT (aumentar capacidad): Se activa cuando la carga aumenta - en este caso cuando CPU > 70% por 5 minutos, 2) Scale IN (reducir capacidad): Se activa cuando la carga disminuye - en este caso cuando CPU < 30% por 10 minutos, evitando pagar por capacidad no utilizada. Load Balancer distribuye tráfico pero no controla scaling. Accelerated Networking mejora rendimiento de red pero no es parte del auto-scaling."
+Actualmente, la aplicación usa un connection string almacenado en App Settings.
+
+¿Cuál es la forma más segura de acceder a Key Vault?""",
+                "options": ['Almacenar el secreto de Key Vault en App Settings', 'Usar Key Vault references en App Settings', 'Habilitar System-Assigned Managed Identity y dar acceso a Key Vault', 'B y C combinados'],
+                "answer": 3,
+                "explanation": "La solución más segura combina: 1) Managed Identity para autenticación sin secretos, 2) Key Vault references (@Microsoft.KeyVault(SecretUri=...)) en App Settings que resuelven automáticamente los secretos. Esto elimina secretos del código y configuración, y usa la identidad administrada para autenticarse con Key Vault."
             },
             {
                 "id": 12,
                 "type": "single",
-                "question": """Una VM de base de datos SQL Server tiene problemas de rendimiento de disco.
+                "question": """ESCENARIO: Woodgrove Bank
 
-Configuración actual:
-- VM Size: Standard_D4s_v3
-- Disco OS: Standard HDD S10 (500 IOPS)
-- Disco de datos (DB): Standard HDD S30 (500 IOPS)
+Woodgrove Bank tiene un App Service con dos deployment slots: Production y Staging.
 
-Métricas observadas:
-- Disk Queue Length: consistentemente > 10
-- Disk IOPS consumed: 100% del límite
-- Disk latency: 50-100ms
+Han desplegado una nueva versión en Staging y necesitan moverla a Production sin tiempo de inactividad.
 
-Requisitos: Reducir latencia a < 5ms y soportar 5,000+ IOPS para cargas de base de datos.
-
-¿Qué tipo de disco debe usar para el disco de datos?""",
-                "options": [
-                    "Standard SSD E30",
-                    "Premium SSD P30",
-                    "Ultra Disk",
-                    "Premium SSD P30 es suficiente para la mayoría de cargas DB; Ultra Disk para cargas extremas"
-                ],
-                "answer": 3,
-                "explanation": "La respuesta depende de los requisitos específicos: 1) Premium SSD P30 proporciona 5,000 IOPS y ~5ms de latencia - suficiente para la mayoría de cargas de SQL Server, 2) Ultra Disk proporciona latencia sub-milisegundo y IOPS configurables hasta 160,000 - necesario para cargas extremas como SAP HANA, data warehousing intensivo, o bases de datos de misión crítica. Standard SSD mejoraría pero no alcanzaría los requisitos de IOPS. Evalúe el costo: Ultra Disk es significativamente más caro."
+¿Qué operación debe realizar?""",
+                "options": ['Copiar los archivos de Staging a Production', 'Realizar un Swap de slots', 'Eliminar Production y renombrar Staging a Production', 'Redirigir manualmente el tráfico'],
+                "answer": 1,
+                "explanation": "Swap de slots intercambia las configuraciones y contenido entre slots instantáneamente. Azure realiza un 'warm up' del slot de destino antes del swap para evitar cold starts. Si hay problemas, puede hacer swap de nuevo para revertir. Es la forma estándar de implementar deployments blue-green sin downtime en App Service."
             },
             {
                 "id": 13,
                 "type": "single",
-                "question": """Tiene una aplicación web en Azure App Service con deployment slots:
+                "question": """ESCENARIO: Contoso, Ltd.
 
-- Production (slot principal)
-- Staging
+Contoso necesita desplegar un cluster de Kubernetes administrado.
 
-La aplicación se desplegó a Staging y pasó todas las pruebas. Necesita promover Staging a Production sin downtime para los usuarios.
+Los requisitos son:
+- Azure debe gestionar el control plane
+- Contoso debe gestionar los worker nodes
+- Integración con Microsoft Entra ID para autenticación
 
-¿Qué acción debe realizar?""",
-                "options": [
-                    "Copiar los archivos de Staging a Production usando FTP",
-                    "Ejecutar Swap operation entre Staging y Production slots",
-                    "Eliminar Production y renombrar Staging a Production",
-                    "Configurar Traffic Manager para redirigir tráfico a Staging"
-                ],
+¿Qué servicio debe usar?""",
+                "options": ['Azure Container Instances', 'Azure Kubernetes Service (AKS)', 'Azure Container Apps', 'Azure Red Hat OpenShift'],
                 "answer": 1,
-                "explanation": "Swap operation es el método correcto porque: 1) Es instantáneo - sin downtime para usuarios, 2) Azure primero 'calienta' (warm up) el slot de staging enviándole requests, 3) Luego intercambia las configuraciones de routing entre slots, 4) Si hay problemas, puede hacer swap de vuelta inmediatamente (rollback). El swap intercambia todo: código, configuración, etc. Las settings marcadas como 'slot settings' permanecen en su slot original (útil para connection strings de DB diferentes por ambiente)."
+                "explanation": "Azure Kubernetes Service (AKS) es el servicio de Kubernetes administrado donde Azure gestiona el control plane (API server, etcd, scheduler) sin costo adicional, y el usuario gestiona los worker nodes (node pools). Soporta integración nativa con Microsoft Entra ID. ACI es serverless sin Kubernetes. Container Apps abstrae más la infraestructura."
             },
             {
                 "id": 14,
                 "type": "single",
-                "question": """Su empresa tiene VMs de desarrollo que solo se usan de lunes a viernes, 8:00 AM a 6:00 PM.
+                "question": """ESCENARIO: Litware, Inc.
 
-Configuración actual:
-- 10 VMs Standard_D4s_v3 en RG-Development
-- Costo mensual actual: ~$3,000 (VMs running 24/7)
+Litware tiene una VM con alta latencia de disco. Actualmente usa Standard HDD.
 
-Requisito: Reducir costos lo máximo posible manteniendo las VMs disponibles durante horario laboral.
+La VM ejecuta una base de datos que requiere:
+- Alto IOPS (> 50,000)
+- Baja latencia (< 1ms)
+- Throughput consistente
 
-¿Qué solución debe implementar?""",
-                "options": [
-                    "Cambiar todas las VMs a tamaño más pequeño (Standard_B2s)",
-                    "Comprar Reserved Instances de 1 año para las 10 VMs",
-                    "Configurar Azure Automation con runbooks para iniciar/detener VMs según horario",
-                    "Migrar las VMs a Azure Virtual Desktop"
-                ],
-                "answer": 2,
-                "explanation": "Azure Automation con runbooks programados es la mejor solución porque: 1) VMs deallocated (detenidas) no incurren costos de cómputo - solo almacenamiento, 2) Las VMs se usarían ~50 horas/semana vs 168 horas/semana = ~70% de ahorro en cómputo, 3) El costo de Azure Automation es mínimo. Cálculo: 10 horas/día × 5 días = 50 horas vs 168 horas = 30% del tiempo original. Reserved Instances requieren compromiso de 1-3 años y no eliminan costo de horas no usadas. Cambiar tamaño reduce rendimiento."
+¿Qué tipo de disco debe usar?""",
+                "options": ['Standard SSD', 'Premium SSD', 'Premium SSD v2', 'Ultra Disk'],
+                "answer": 3,
+                "explanation": "Ultra Disk proporciona el mejor rendimiento con IOPS (hasta 160,000), throughput (hasta 4,000 MB/s), y latencia sub-millisegundo. Permite configurar IOPS y throughput independientemente. Premium SSD v2 también ofrece alto rendimiento pero Ultra Disk es superior para requisitos extremos como bases de datos de alto rendimiento. Premium SSD tiene límites más bajos."
             },
             {
                 "id": 15,
                 "type": "single",
-                "question": """Tiene un Azure App Service Plan en tier Standard (S1).
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Necesita planificar la capacidad para manejar picos de tráfico.
+Fabrikam tiene VMs que solo se usan durante horario laboral (8am-6pm, lunes a viernes).
 
-¿Qué tipos de scaling puede configurar en este tier?""",
-                "options": [
-                    "Solo Scale Up (vertical) - cambiar a un tier más alto",
-                    "Solo Scale Out (horizontal) - agregar más instancias",
-                    "Scale Up (vertical) y Scale Out (horizontal)",
-                    "Ninguno - Standard tier no soporta scaling"
-                ],
+Necesitan reducir costos de estas VMs.
+
+¿Qué solución debe implementar?""",
+                "options": ['Comprar Azure Reserved Instances', 'Configurar auto-shutdown en las VMs', 'Usar Azure Automation para start/stop programado', 'Cambiar a VMs más pequeñas'],
                 "answer": 2,
-                "explanation": "El tier Standard (S1) soporta AMBOS tipos de scaling: 1) Scale Up (vertical): Cambiar a un tier más alto (S2, S3, P1v2, etc.) para obtener más CPU/memoria por instancia - requiere un breve reinicio, 2) Scale Out (horizontal): Agregar más instancias del mismo tier (hasta 10 instancias en Standard) - puede ser manual o automático basado en métricas/horario. El tier Basic solo soporta scaling manual (hasta 3 instancias). Free/Shared no soportan scaling. Para auto-scale necesita Standard o superior."
+                "explanation": "Azure Automation con runbooks permite programar el inicio Y detención de VMs. Auto-shutdown solo detiene las VMs pero no las inicia automáticamente. Las VMs detenidas (deallocated) no incurren costos de cómputo. Reserved Instances son para VMs que corren 24/7. Cambiar el tamaño no reduce costos si no se necesitan las VMs."
             }
         ]
     },
@@ -1004,337 +799,247 @@ Necesita planificar la capacidad para manejar picos de tráfico.
             {
                 "id": 1,
                 "type": "single",
-                "question": """ESCENARIO: Contoso tiene la siguiente infraestructura en Azure:
+                "question": """ESCENARIO: Contoso, Ltd.
 
-VNet-Production (East US)
-- Address space: 10.1.0.0/16
-- Contiene VMs de aplicación
+Contoso tiene dos VNets en la misma región:
 
-VNet-Database (East US)
-- Address space: 10.2.0.0/16
-- Contiene Azure SQL VMs
+| VNet | Espacio de direcciones | Recursos |
+|------|------------------------|----------|
+| VNet-Hub | 10.0.0.0/16 | Firewall, VPN Gateway |
+| VNet-Spoke | 10.1.0.0/16 | VMs de aplicación |
 
-Requisitos:
-- Las VMs en VNet-Production deben comunicarse con las VMs en VNet-Database
-- El tráfico NO debe salir a Internet público
-- Latencia mínima
-- Sin costo de dispositivos de gateway
+Las VMs en VNet-Spoke necesitan comunicarse con recursos en VNet-Hub.
+
+El tráfico NO debe pasar por Internet.
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "VPN Gateway en cada VNet con conexión VNet-to-VNet",
-                    "VNet Peering entre VNet-Production y VNet-Database",
-                    "ExpressRoute para conectar ambas VNets",
-                    "NAT Gateway en cada VNet"
-                ],
+                "options": ['VPN Gateway', 'VNet Peering', 'ExpressRoute', 'NAT Gateway'],
                 "answer": 1,
-                "explanation": "VNet Peering es la solución correcta porque: 1) Conecta VNets directamente a través del backbone de Azure (baja latencia), 2) El tráfico nunca sale a Internet público, 3) No requiere gateways - solo configuración de peering, 4) Es el método más económico para conectar VNets en la misma región. VPN Gateway tiene costo por hora. ExpressRoute es para conexión on-premises. NAT Gateway es para tráfico saliente a Internet."
+                "explanation": "VNet Peering conecta dos VNets directamente a través del backbone de Microsoft Azure. El tráfico es privado, de baja latencia, y nunca pasa por Internet. Es la solución más simple y económica para conectar VNets en la misma región o diferentes regiones (Global VNet Peering). VPN Gateway es para conexiones cifradas sobre Internet."
             },
             {
                 "id": 2,
                 "type": "single",
-                "question": """Tiene una subnet llamada Subnet-Web que contiene servidores web.
+                "question": """ESCENARIO: Litware, Inc.
 
-Requisitos de seguridad:
-- Permitir tráfico HTTPS (TCP 443) desde Internet
-- Permitir tráfico HTTP (TCP 80) desde Internet (redirige a HTTPS)
-- Bloquear todo otro tráfico entrante desde Internet
-- Permitir que los servidores respondan a las conexiones establecidas
+Litware tiene una subnet con servidores web que deben ser accesibles SOLO por HTTPS (puerto 443) desde Internet.
+
+Todo otro tráfico entrante debe ser bloqueado.
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "Azure Firewall con reglas de aplicación",
-                    "Network Security Group (NSG) con reglas de entrada para puertos 80 y 443",
-                    "Application Gateway con WAF",
-                    "Route Table con rutas personalizadas"
-                ],
+                "options": ['Azure Firewall', 'Network Security Group (NSG)', 'Application Gateway con WAF', 'Azure Front Door'],
                 "answer": 1,
-                "explanation": "Network Security Group (NSG) es la solución correcta para este escenario: 1) Permite filtrar tráfico basado en puerto, protocolo, origen y destino, 2) Regla 1: Allow Inbound TCP 443 from Internet, 3) Regla 2: Allow Inbound TCP 80 from Internet, 4) Las reglas de salida por defecto permiten tráfico de respuesta (NSG es stateful). Azure Firewall es más complejo y costoso para este caso simple. Application Gateway es un balanceador L7, no solo filtrado. Route Tables son para routing, no filtrado."
+                "explanation": "Network Security Group (NSG) es un firewall de capa 3/4 que filtra tráfico hacia y desde recursos de Azure. Puede asociarse a subnets o NICs. Para este requisito simple (permitir solo 443 entrante), un NSG es la solución más directa y económica. Azure Firewall es para escenarios más complejos. WAF es para protección de aplicaciones web."
             },
             {
                 "id": 3,
                 "type": "single",
-                "question": """Tiene VMs en una subnet privada que necesitan acceder a Internet para:
-- Descargar actualizaciones de Windows Update
-- Acceder a APIs externas
-- Descargar paquetes de repositorios públicos
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Requisitos:
-- Las VMs NO deben tener IPs públicas
-- Las VMs NO deben ser accesibles directamente desde Internet
-- Todas las VMs deben usar la misma IP para conexiones salientes
+Fabrikam tiene VMs en una subnet privada (sin IP pública) que necesitan:
+
+- Acceder a Internet para descargar actualizaciones
+- NO ser accesibles desde Internet
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "Asignar IP pública a cada VM",
-                    "Configurar NAT Gateway en la subnet",
-                    "Crear un VPN Gateway",
-                    "Configurar Azure Firewall como default route"
-                ],
+                "options": ['Asignar IPs públicas a las VMs', 'Configurar NAT Gateway', 'Configurar VNet Peering con una VNet pública', 'Crear una VPN Point-to-Site'],
                 "answer": 1,
-                "explanation": "NAT Gateway es la solución correcta porque: 1) Proporciona conectividad de salida a Internet para VMs sin IP pública, 2) Las VMs no son accesibles directamente desde Internet (solo saliente), 3) Todas las VMs de la subnet comparten las IPs públicas del NAT Gateway para conexiones salientes (SNAT), 4) Es un servicio administrado, altamente disponible. Azure Firewall también funcionaría pero es más costoso y complejo para solo SNAT. VPN Gateway es para conectividad híbrida."
+                "explanation": "NAT Gateway permite que recursos en subnets privadas accedan a Internet para tráfico saliente sin exponer IPs públicas. Todo el tráfico saliente usa la IP del NAT Gateway. Las conexiones entrantes desde Internet no son posibles con NAT Gateway, cumpliendo el requisito de seguridad."
             },
             {
                 "id": 4,
                 "type": "single",
-                "question": """Necesita implementar un balanceador de carga para su aplicación web con los siguientes requisitos:
+                "question": """ESCENARIO: A. Datum Corporation
 
-- Terminación SSL/TLS en el balanceador
-- Enrutamiento basado en URL (/api/* → backend-api, /images/* → backend-static)
-- Web Application Firewall para protección OWASP
-- Afinidad de sesión (sticky sessions) basada en cookies
+A. Datum está desplegando una aplicación web que requiere:
 
-¿Qué servicio de Azure debe usar?""",
-                "options": [
-                    "Azure Load Balancer Standard",
-                    "Azure Application Gateway con WAF",
-                    "Azure Traffic Manager",
-                    "Azure Front Door"
-                ],
+- Balanceo de carga en capa 7 (HTTP/HTTPS)
+- Terminación SSL/TLS
+- Enrutamiento basado en URL path (/api/* va a backend-api, /* va a backend-web)
+- Web Application Firewall (WAF)
+
+¿Qué servicio debe usar?""",
+                "options": ['Azure Load Balancer', 'Azure Application Gateway', 'Azure Traffic Manager', 'Azure Load Balancer Standard'],
                 "answer": 1,
-                "explanation": "Azure Application Gateway es la respuesta correcta porque: 1) Es un balanceador de carga de capa 7 (HTTP/HTTPS), 2) Soporta terminación SSL/TLS, 3) Permite enrutamiento basado en URL path, 4) Tiene SKU con WAF integrado para protección OWASP, 5) Soporta cookie-based session affinity. Azure Load Balancer es capa 4 (no entiende HTTP/URLs). Traffic Manager es DNS-based, no puede hacer routing por URL. Front Door también cumpliría pero es global/CDN."
+                "explanation": "Application Gateway es un load balancer de capa 7 (aplicación) que soporta terminación SSL, enrutamiento basado en URL/host/headers, y WAF integrado. Azure Load Balancer es capa 4 (TCP/UDP) sin estas características. Traffic Manager es DNS-based para enrutamiento global, no para balanceo de aplicaciones."
             },
             {
                 "id": 5,
-                "type": "single",
-                "question": """Tiene la siguiente configuración:
+                "type": "multiple",
+                "question": """ESCENARIO: Tailwind Traders
 
-- VNet-Hub con un Network Virtual Appliance (NVA) de firewall: 10.0.0.4
-- VNet-Spoke con VMs que necesitan que TODO su tráfico pase por el NVA
+Tailwind Traders necesita establecer una conexión VPN Site-to-Site entre su datacenter on-premises y Azure.
 
-Actualmente las VMs en VNet-Spoke pueden acceder a Internet directamente sin pasar por el NVA.
+El datacenter tiene un dispositivo VPN con IP pública 203.0.113.10.
+El rango de red on-premises es 192.168.0.0/16.
 
-¿Qué debe configurar para forzar el tráfico a través del NVA?""",
-                "options": [
-                    "NSG en VNet-Spoke bloqueando tráfico a Internet",
-                    "User Defined Route (UDR) con next hop 'Virtual Appliance' apuntando al NVA",
-                    "VNet Peering con 'Allow forwarded traffic' habilitado",
-                    "Service Endpoint hacia el NVA"
-                ],
-                "answer": 1,
-                "explanation": "User Defined Route (UDR) es necesario para anular el routing por defecto: 1) Crear Route Table con ruta: 0.0.0.0/0 → Next hop type: Virtual Appliance → Next hop IP: 10.0.0.4, 2) Asociar la Route Table a las subnets de VNet-Spoke. Esto fuerza TODO el tráfico (incluyendo Internet) a pasar por el NVA. También necesita: VNet peering entre Hub y Spoke, IP forwarding habilitado en la NIC del NVA. NSG solo bloquea/permite, no redirecciona. Service Endpoints son para acceso a servicios PaaS."
+¿Qué DOS recursos debe crear en Azure? (Seleccione dos)""",
+                "options": ['Virtual Network Gateway (VPN Gateway)', 'Local Network Gateway', 'ExpressRoute Circuit', 'Azure Bastion'],
+                "answer": [0, 1],
+                "explanation": "Para Site-to-Site VPN se requieren: 1) Virtual Network Gateway (VPN Gateway) - el endpoint de VPN en Azure, 2) Local Network Gateway - representa el dispositivo VPN on-premises (IP pública 203.0.113.10) y los rangos de red on-premises (192.168.0.0/16). Luego se crea una Connection entre ambos. ExpressRoute es una tecnología diferente."
             },
             {
                 "id": 6,
                 "type": "single",
-                "question": """Una aplicación en una VM necesita acceder a Azure SQL Database.
+                "question": """ESCENARIO: Woodgrove Bank
 
-Requisitos de seguridad:
-- El tráfico NO debe pasar por Internet público
-- La base de datos debe tener una IP privada en la VNet
-- La conexión debe funcionar desde VNets peered y desde on-premises vía VPN
+Woodgrove Bank tiene una VM que actúa como Network Virtual Appliance (firewall).
+
+Todo el tráfico desde la subnet App-Subnet debe pasar por el NVA antes de ir a Internet.
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "Service Endpoint para Microsoft.Sql en la subnet",
-                    "Private Endpoint para Azure SQL Database",
-                    "VNet Integration en Azure SQL",
-                    "Azure Firewall con reglas para Azure SQL"
-                ],
+                "options": ['NSG con regla de denegación', 'User Defined Route (UDR) con next hop al NVA', 'VNet Peering', 'Service Endpoint'],
                 "answer": 1,
-                "explanation": "Private Endpoint es la solución correcta porque: 1) Crea una interfaz de red con IP privada en su VNet para Azure SQL, 2) El tráfico va por la red privada de Azure, nunca por Internet, 3) Funciona con VNet peering y conexiones VPN/ExpressRoute (el DNS resuelve a la IP privada), 4) Deshabilita el acceso público a la base de datos. Service Endpoint también usa red privada pero la base de datos mantiene su IP pública y requiere configuración de firewall - no funciona tan bien con conexiones híbridas."
+                "explanation": "User Defined Routes (UDR) permiten personalizar el enrutamiento de tráfico en Azure. Cree una Route Table con una ruta para 0.0.0.0/0 (todo el tráfico a Internet) con next hop type 'Virtual Appliance' y la IP del NVA. Asocie la Route Table a App-Subnet. El tráfico se redirigirá al NVA antes de salir a Internet."
             },
             {
                 "id": 7,
                 "type": "single",
-                "question": """Tiene tres VNets que necesitan resolver nombres DNS entre sí:
+                "question": """ESCENARIO: Contoso, Ltd.
 
-- VNet-App (10.1.0.0/16) - contiene app.contoso.local
-- VNet-DB (10.2.0.0/16) - contiene db.contoso.local
-- VNet-Web (10.3.0.0/16) - contiene web.contoso.local
+Contoso tiene una aplicación que necesita conectarse a Azure SQL Database de forma completamente privada.
 
-Las VNets están conectadas mediante peering. Las VMs necesitan resolver nombres como "app.contoso.local" desde cualquier VNet.
+Los requisitos son:
+- El tráfico nunca debe salir de la red de Microsoft
+- La base de datos no debe tener endpoint público
+- Debe resolverse usando una IP privada
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "Azure DNS public zone para contoso.local",
-                    "Azure Private DNS zone con Virtual Network links a las tres VNets",
-                    "Servidor DNS personalizado en una de las VNets",
-                    "Archivos hosts en cada VM"
-                ],
+                "options": ['Service Endpoint para Microsoft.Sql', 'Private Endpoint', 'VNet Peering con la VNet de SQL', 'Firewall de Azure SQL para permitir la VNet'],
                 "answer": 1,
-                "explanation": "Azure Private DNS zone es la solución correcta: 1) Crear Private DNS zone 'contoso.local', 2) Crear Virtual Network links a VNet-App, VNet-DB, y VNet-Web, 3) Registrar los records A (app, db, web) con sus IPs privadas, 4) Las VMs usan Azure DNS (168.63.129.16) automáticamente y resuelven los nombres. No requiere gestionar servidores DNS. Public DNS no funcionaría con IPs privadas. Los archivos hosts no escalan y son difíciles de mantener."
+                "explanation": "Private Endpoint crea una interfaz de red privada en su VNet para Azure SQL Database con una IP privada. El tráfico va completamente por la red privada de Microsoft. Puede deshabilitar el endpoint público. Service Endpoint también mantiene el tráfico en la red de Microsoft pero la base de datos mantiene su IP pública."
             },
             {
                 "id": 8,
                 "type": "single",
-                "question": """Su empresa tiene un datacenter on-premises y necesita conectividad a Azure.
+                "question": """ESCENARIO: Litware, Inc.
 
-Requisitos:
-- Conexión privada (no sobre Internet público)
-- Latencia predecible y baja (< 10ms)
-- Ancho de banda garantizado de 1 Gbps
-- SLA de disponibilidad de 99.95%
+Litware tiene múltiples VNets y necesita resolución DNS privada entre todas ellas.
 
-¿Qué tipo de conexión debe implementar?""",
-                "options": [
-                    "Site-to-Site VPN sobre Internet",
-                    "Point-to-Site VPN",
-                    "ExpressRoute",
-                    "VPN Gateway con BGP"
-                ],
-                "answer": 2,
-                "explanation": "ExpressRoute es la única opción que cumple TODOS los requisitos: 1) Conexión privada dedicada a través de un proveedor de conectividad - no usa Internet público, 2) Latencia baja y predecible debido a la conexión dedicada, 3) Ancho de banda garantizado (desde 50 Mbps hasta 10 Gbps), 4) SLA de disponibilidad de 99.95% (o 99.99% con ExpressRoute Premium y dos circuitos). VPN sobre Internet no garantiza latencia ni ancho de banda. Point-to-Site es para usuarios individuales, no para datacenter."
+Los requisitos son:
+- Registrar automáticamente los nombres de las VMs
+- Resolver nombres entre VNets
+- No usar servidores DNS personalizados
+
+¿Qué debe configurar?""",
+                "options": ['Azure DNS public zone', 'Azure Private DNS zone con VNet links', 'DNS servers en las VNets', 'Archivo hosts en cada VM'],
+                "answer": 1,
+                "explanation": "Azure Private DNS zones proporcionan resolución DNS dentro y entre VNets. Vincule la zona privada a las VNets que necesitan resolver nombres. Habilite auto-registration para que las VMs se registren automáticamente. Es una solución completamente administrada sin necesidad de servidores DNS. Las zonas públicas son para resolución desde Internet."
             },
             {
                 "id": 9,
-                "type": "multiple",
-                "question": """Necesita configurar una conexión Site-to-Site VPN entre Azure y su oficina on-premises.
+                "type": "single",
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-El dispositivo VPN on-premises es un Cisco ASA con IP pública 203.0.113.10.
-La VNet de Azure es 10.1.0.0/16.
-La red on-premises es 192.168.0.0/24.
+Fabrikam necesita conectar su datacenter on-premises a Azure con los siguientes requisitos:
 
-¿Cuáles DOS recursos de Azure debe crear? (Seleccione dos)""",
-                "options": [
-                    "Virtual Network Gateway (VPN type) en una GatewaySubnet",
-                    "Local Network Gateway con IP 203.0.113.10 y address space 192.168.0.0/24",
-                    "ExpressRoute Circuit",
-                    "Application Gateway"
-                ],
-                "answer": [0, 1],
-                "explanation": "Para Site-to-Site VPN necesita: 1) Virtual Network Gateway (VPN type): Es el endpoint de VPN en Azure. Debe desplegarse en una subnet especial llamada 'GatewaySubnet' en su VNet. 2) Local Network Gateway: Representa el dispositivo VPN on-premises. Configura: IP pública del dispositivo (203.0.113.10) y los address spaces de la red on-premises (192.168.0.0/24). Luego crea una Connection entre ambos con la Pre-Shared Key. ExpressRoute es diferente a VPN. Application Gateway es un load balancer."
+- Conexión privada dedicada (no Internet)
+- Latencia predecible y baja
+- Ancho de banda garantizado de 1 Gbps
+- SLA de conectividad
+
+¿Qué debe implementar?""",
+                "options": ['Site-to-Site VPN', 'Point-to-Site VPN', 'ExpressRoute', 'VNet Peering'],
+                "answer": 2,
+                "explanation": "ExpressRoute proporciona conexión privada dedicada entre on-premises y Azure a través de un proveedor de conectividad. Ofrece latencia predecible, ancho de banda garantizado (desde 50 Mbps hasta 100 Gbps), y SLA de disponibilidad. El tráfico no pasa por Internet público. VPN Site-to-Site usa Internet y no garantiza ancho de banda."
             },
             {
                 "id": 10,
                 "type": "single",
-                "question": """Tiene un NSG asociado a una subnet con las siguientes reglas INBOUND:
+                "question": """ESCENARIO: A. Datum Corporation
 
-| Priority | Name | Source | Destination | Port | Action |
-|----------|------|--------|-------------|------|--------|
-| 100 | Allow-HTTPS | Any | Any | 443 | Allow |
-| 200 | Deny-All | Any | Any | Any | Deny |
-| 65000 | AllowVnetInBound | VirtualNetwork | VirtualNetwork | Any | Allow |
-| 65500 | DenyAllInBound | Any | Any | Any | Deny |
+A. Datum tiene un NSG con las siguientes reglas entrantes:
 
-Una VM en OTRA subnet de la MISMA VNet intenta conectar al puerto 22 (SSH) a una VM en esta subnet.
+| Prioridad | Nombre | Puerto | Acción |
+|-----------|--------|--------|--------|
+| 100 | Allow-HTTPS | 443 | Allow |
+| 200 | Deny-All | * | Deny |
+| 65000 | AllowVnetInBound | * | Allow |
 
-¿Se permitirá la conexión?""",
-                "options": [
-                    "Sí, porque la regla AllowVnetInBound permite tráfico VNet-to-VNet",
-                    "No, porque la regla Deny-All (priority 200) bloquea antes que AllowVnetInBound",
-                    "Sí, porque SSH desde VNets internas siempre se permite",
-                    "Depende de si la VM origen tiene IP pública"
-                ],
-                "answer": 1,
-                "explanation": "NO se permitirá. Las reglas de NSG se evalúan por prioridad (número más bajo = mayor prioridad): 1) Priority 100 (Allow-HTTPS): No coincide - el puerto es 22, no 443, 2) Priority 200 (Deny-All): COINCIDE - origen Any, destino Any, puerto Any → DENY. La evaluación termina aquí. La regla AllowVnetInBound (priority 65000) NUNCA se evalúa porque Deny-All tiene mayor prioridad. Las reglas default (65000, 65500) solo aplican si ninguna regla personalizada coincide antes."
+¿Qué tráfico entrante será permitido?""",
+                "options": ['Solo HTTPS (443) desde cualquier origen', 'HTTPS (443) y tráfico VNet-to-VNet', 'Todo el tráfico', 'Ningún tráfico'],
+                "answer": 0,
+                "explanation": "Las reglas NSG se evalúan por prioridad (menor número = mayor prioridad). HTTPS (443) es permitido por la regla 100. La regla 200 (Deny-All) bloquea todo otro tráfico ANTES de que se evalúe la regla default AllowVnetInBound (65000). Por lo tanto, incluso el tráfico VNet-to-VNet será bloqueado excepto 443."
             },
             {
                 "id": 11,
                 "type": "single",
-                "question": """Necesita implementar balanceo de carga para servidores de base de datos SQL Server (puerto 1433) dentro de una VNet.
+                "question": """ESCENARIO: Tailwind Traders
 
-Requisitos:
-- Los clientes están en la misma VNet
-- El balanceador debe tener una IP privada
-- Balanceo TCP puro (capa 4)
-- Health probes para detectar servidores caídos
+Tailwind Traders necesita balancear tráfico TCP entre múltiples VMs en una subnet privada.
 
-¿Qué servicio de Azure debe usar?""",
-                "options": [
-                    "Azure Load Balancer Internal (Standard SKU)",
-                    "Azure Load Balancer Public (Standard SKU)",
-                    "Azure Application Gateway",
-                    "Azure Traffic Manager"
-                ],
-                "answer": 0,
-                "explanation": "Azure Load Balancer Internal (Standard SKU) es correcto porque: 1) 'Internal' significa IP privada (frontend) para uso dentro de VNet, 2) Es capa 4 (TCP/UDP) - perfecto para SQL Server, 3) Soporta health probes TCP para detectar disponibilidad, 4) Standard SKU proporciona mejor SLA y más features que Basic. Application Gateway es capa 7 (HTTP/HTTPS). Traffic Manager es DNS-based para distribución global. Public Load Balancer expondría el servicio a Internet."
+Los requisitos son:
+- Balanceador con IP privada
+- Alta disponibilidad
+- Health probes
+
+¿Qué tipo de recurso debe crear?""",
+                "options": ['Azure Load Balancer - Public', 'Azure Load Balancer - Internal', 'Application Gateway', 'Traffic Manager'],
+                "answer": 1,
+                "explanation": "Internal (Private) Load Balancer distribuye tráfico dentro de una VNet usando una IP privada. Es ideal para balancear tráfico entre tiers de aplicación (por ejemplo, tier web a tier de aplicación). Public Load Balancer usa IP pública. Application Gateway es capa 7 (HTTP). Traffic Manager es DNS-based para tráfico global."
             },
             {
                 "id": 12,
                 "type": "single",
-                "question": """Tiene la siguiente configuración:
+                "question": """ESCENARIO: Woodgrove Bank
 
-VNet1 (10.1.0.0/16):
-- Contiene VM-App
-- Tiene VNet peering con VNet2
+Woodgrove Bank tiene la siguiente configuración:
 
-VNet2 (10.2.0.0/16):
-- Tiene un VPN Gateway conectado a red on-premises (192.168.0.0/24)
+- VNet1 tiene VMs
+- VNet2 tiene un VPN Gateway conectado a on-premises
+- VNet1 y VNet2 tienen VNet Peering configurado
 
-Requisito: VM-App en VNet1 necesita comunicarse con servidores on-premises a través del VPN Gateway en VNet2.
+Las VMs en VNet1 necesitan acceder a recursos on-premises a través del gateway en VNet2.
 
-¿Qué configuración debe realizar en el peering?""",
-                "options": [
-                    "Crear un VPN Gateway adicional en VNet1",
-                    "En VNet1: habilitar 'Use remote gateways', En VNet2: habilitar 'Allow gateway transit'",
-                    "Configurar ExpressRoute en VNet1",
-                    "El peering ya permite esta comunicación por defecto"
-                ],
+¿Qué configuración adicional necesita en el peering?""",
+                "options": ['Crear un VPN Gateway en VNet1', "Habilitar 'Allow Gateway Transit' en VNet2 y 'Use Remote Gateway' en VNet1", 'Crear otro peering bidireccional', 'No se necesita configuración adicional'],
                 "answer": 1,
-                "explanation": "Gateway Transit es la funcionalidad correcta: 1) En VNet2 (la que tiene el gateway): Habilitar 'Allow gateway transit' - permite que VNets peered usen su gateway, 2) En VNet1 (la que NO tiene gateway): Habilitar 'Use remote gateways' - configura la VNet para usar el gateway de la VNet peered. También necesita agregar la ruta a 192.168.0.0/24 en VNet1 o usar BGP. No necesita gateway adicional en VNet1. Por defecto, el peering no comparte gateways."
+                "explanation": "Gateway Transit permite compartir un VPN/ExpressRoute gateway entre VNets peered. En VNet2 (que tiene el gateway), habilite 'Allow Gateway Transit'. En VNet1 (que quiere usar el gateway remoto), habilite 'Use Remote Gateway'. Esto evita desplegar gateways redundantes y reduce costos."
             },
             {
                 "id": 13,
                 "type": "single",
-                "question": """Tiene empleados que trabajan remotamente desde sus hogares y necesitan acceder a recursos en una VNet de Azure.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Requisitos:
-- Los empleados usan laptops Windows 10/11 corporativos
-- Cada empleado debe poder conectarse individualmente desde cualquier ubicación
-- No se requiere hardware VPN en las ubicaciones de los empleados
-- La conexión debe ser segura (cifrada)
+Contoso tiene usuarios remotos que trabajan desde casa y necesitan acceder a recursos en una VNet de Azure.
 
-¿Qué tipo de conexión VPN debe configurar?""",
-                "options": [
-                    "Site-to-Site VPN",
-                    "Point-to-Site VPN",
-                    "ExpressRoute",
-                    "VNet Peering"
-                ],
+Los requisitos son:
+- Conexión VPN desde laptops individuales
+- Autenticación con certificados o Microsoft Entra ID
+- No requiere dispositivo VPN dedicado
+
+¿Qué tipo de conexión debe configurar?""",
+                "options": ['Site-to-Site VPN', 'Point-to-Site VPN', 'ExpressRoute', 'Azure Bastion'],
                 "answer": 1,
-                "explanation": "Point-to-Site (P2S) VPN es la solución correcta porque: 1) Permite conexiones individuales desde cualquier ubicación con acceso a Internet, 2) No requiere hardware VPN - solo software cliente en el laptop, 3) Soporta protocolos seguros: IKEv2, OpenVPN, SSTP, 4) Ideal para empleados remotos, teletrabajo. Site-to-Site requiere un dispositivo VPN en cada ubicación. ExpressRoute es para conexiones dedicadas de datacenter. VNet Peering es entre VNets de Azure, no para usuarios externos."
+                "explanation": "Point-to-Site (P2S) VPN permite que clientes individuales (laptops, desktops) se conecten a una VNet de Azure desde cualquier ubicación. Soporta autenticación con certificados, RADIUS, o Microsoft Entra ID (nativo). Site-to-Site es para conexiones entre redes completas. Bastion es para acceso RDP/SSH a VMs específicas."
             },
             {
                 "id": 14,
                 "type": "single",
-                "question": """Está diseñando la arquitectura de red para una aplicación de tres capas:
+                "question": """ESCENARIO: Litware, Inc.
 
-- Web tier: Servidores web públicos
-- Application tier: Lógica de negocio
-- Database tier: SQL Server
+Litware está diseñando la red para una aplicación de 3 tiers:
 
-Requisitos de seguridad:
-- Web tier debe ser accesible desde Internet (HTTPS)
-- Application tier solo debe ser accesible desde Web tier
-- Database tier solo debe ser accesible desde Application tier
-- Aislar cada tier para contener brechas de seguridad
+- Web tier (frontend)
+- Application tier (lógica de negocio)
+- Database tier (SQL Server)
 
-¿Cuál es la mejor práctica de diseño?""",
-                "options": [
-                    "Una VNet con una subnet y NSG a nivel de NIC",
-                    "Una subnet por tier con NSG en cada subnet",
-                    "Una VNet separada por tier con VNet peering",
-                    "Todas las VMs en la misma subnet con Application Security Groups"
-                ],
+¿Cuál es la mejor práctica para segmentación de red?""",
+                "options": ['Una subnet para todos los tiers', 'Una subnet por tier con NSGs entre ellos', 'Una VNet por tier con peering', 'VMs en diferentes regiones'],
                 "answer": 1,
-                "explanation": "Una subnet por tier con NSG es la mejor práctica: 1) Subnet-Web con NSG: Allow HTTPS from Internet, 2) Subnet-App con NSG: Allow from Subnet-Web only, 3) Subnet-DB con NSG: Allow SQL (1433) from Subnet-App only. Beneficios: Segmentación clara, políticas de seguridad por tier, contención de brechas (si comprometen Web tier, no pueden acceder directamente a DB). VNets separadas agregan complejidad innecesaria. Una sola subnet no proporciona aislamiento. ASGs son complementarios pero no reemplazan subnets."
+                "explanation": "La mejor práctica es usar subnets separadas para cada tier (Web, App, Database) dentro de la misma VNet, con NSGs para controlar el tráfico entre ellos. Por ejemplo: Web permite 443 desde Internet, App permite tráfico solo desde Web, Database permite SQL solo desde App. Una VNet por tier añadiría complejidad innecesaria."
             },
             {
                 "id": 15,
                 "type": "single",
-                "question": """Su aplicación web en Azure App Service está expuesta a ataques.
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Los logs muestran intentos de:
-- SQL injection en parámetros de URL
-- Cross-Site Scripting (XSS) en formularios
-- Path traversal attacks
-- Escaneos automatizados de vulnerabilidades
-
-Requisitos:
-- Proteger contra OWASP Top 10 vulnerabilidades
-- Bloquear solicitudes maliciosas automáticamente
-- Registrar todos los ataques bloqueados
+Fabrikam necesita proteger sus aplicaciones web contra ataques como SQL injection, cross-site scripting (XSS), y otros del OWASP Top 10.
 
 ¿Qué debe implementar?""",
-                "options": [
-                    "Network Security Group con reglas personalizadas",
-                    "Azure Firewall con threat intelligence",
-                    "Web Application Firewall (WAF) con Application Gateway o Front Door",
-                    "DDoS Protection Standard"
-                ],
+                "options": ['Network Security Group (NSG)', 'Azure Firewall', 'Web Application Firewall (WAF)', 'DDoS Protection Standard'],
                 "answer": 2,
-                "explanation": "Web Application Firewall (WAF) es la solución correcta porque: 1) Diseñado específicamente para proteger aplicaciones web, 2) Incluye reglas predefinidas para OWASP Top 10 (SQL injection, XSS, etc.), 3) Puede configurarse en modo 'Prevention' para bloquear ataques automáticamente, 4) Logging detallado de todas las solicitudes bloqueadas. NSG opera en capa 4, no entiende HTTP. Azure Firewall es para tráfico de red general. DDoS Protection es para ataques de denegación de servicio, no ataques de capa de aplicación."
+                "explanation": "Web Application Firewall (WAF) protege aplicaciones web contra vulnerabilidades comunes como SQL injection, XSS, y otras amenazas OWASP Top 10. Puede implementarse con Application Gateway o Azure Front Door. NSG es capa 3/4, no inspecciona contenido HTTP. Azure Firewall es capa 3-7 pero no específico para OWASP. DDoS es para ataques volumétricos."
             }
         ]
     },
@@ -1346,310 +1051,222 @@ Requisitos:
             {
                 "id": 1,
                 "type": "single",
-                "question": """ESCENARIO: Contoso tiene VMs de producción críticas que hospedan una aplicación de e-commerce.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Requisitos de monitoreo:
-- Recibir notificación por EMAIL cuando el uso de CPU supere 80% por más de 5 minutos
-- La notificación debe incluir el nombre de la VM afectada
-- También se debe crear un ticket automático en ServiceNow
+Contoso necesita ser notificado cuando el uso de CPU de una VM supere el 85% durante 5 minutos consecutivos.
 
-¿Qué componentes de Azure Monitor debe configurar?""",
-                "options": [
-                    "Activity Log alert para monitorear métricas de CPU",
-                    "Metric alert con condition CPU > 80% y Action Group con acciones de email y webhook",
-                    "Log Analytics query que se ejecute cada 5 minutos",
-                    "Azure Advisor recommendation para alertas de rendimiento"
-                ],
+La notificación debe enviarse por email al equipo de operaciones.
+
+¿Qué debe configurar?""",
+                "options": ['Activity Log alert', 'Metric alert con Action Group', 'Log Analytics query', 'Azure Advisor alert'],
                 "answer": 1,
-                "explanation": "Metric Alert + Action Group es la solución correcta: 1) Metric Alert permite configurar condiciones basadas en métricas (CPU > 80% durante 5 minutos), 2) Action Group define las acciones a tomar: email a destinatarios y webhook para integración con ServiceNow, 3) El alert incluye el contexto del recurso (nombre de VM, etc.). Activity Log es para eventos de administración, no métricas de rendimiento. Log Analytics queries son para análisis de logs, no métricas en tiempo real."
+                "explanation": "Metric alerts monitorean métricas de recursos (CPU, memoria, etc.) y pueden disparar cuando se cumplen condiciones específicas (CPU > 85% por 5 minutos). Action Groups definen las acciones a tomar (email, SMS, webhook, Azure Function, etc.). Activity Log alerts son para eventos de administración, no métricas de rendimiento."
             },
             {
                 "id": 2,
                 "type": "single",
-                "question": """Tiene 50 VMs distribuidas en 5 suscripciones de Azure.
+                "question": """ESCENARIO: Litware, Inc.
 
-Necesita:
-- Recopilar logs de eventos de Windows (Application, System, Security)
-- Recopilar logs de syslog de VMs Linux
-- Consultar los logs usando KQL (Kusto Query Language)
-- Crear alertas basadas en patrones en los logs
-- Retener los logs por 2 años
+Litware necesita analizar logs de múltiples VMs para:
 
-¿Qué servicio debe usar como destino central de los logs?""",
-                "options": [
-                    "Azure Monitor Metrics",
-                    "Log Analytics workspace",
-                    "Azure Storage Account con blob containers",
-                    "Azure Event Hubs"
-                ],
+- Buscar patrones de errores
+- Crear queries personalizadas
+- Visualizar tendencias
+- Configurar alertas basadas en logs
+
+¿Qué servicio debe usar?""",
+                "options": ['Azure Monitor Metrics', 'Log Analytics workspace', 'Storage Account logs', 'Azure Diagnostics extension'],
                 "answer": 1,
-                "explanation": "Log Analytics workspace es la solución correcta porque: 1) Puede recopilar logs de múltiples suscripciones en un workspace central, 2) Soporta Windows Event Logs y Syslog, 3) Permite consultas con KQL para análisis y troubleshooting, 4) Se integra con Azure Monitor Alerts para alertas basadas en consultas de logs, 5) Soporta retención hasta 2 años (o más con archive). Azure Metrics es para métricas numéricas. Storage Account permite almacenar pero no consultar fácilmente. Event Hubs es para streaming a sistemas externos."
+                "explanation": "Log Analytics workspace (parte de Azure Monitor) almacena y permite consultar logs usando Kusto Query Language (KQL). Puede centralizar logs de múltiples recursos, crear dashboards, configurar alertas basadas en queries, y analizar patrones. Azure Monitor Metrics es para datos numéricos de series de tiempo. Storage Account almacena pero no permite queries avanzadas."
             },
             {
                 "id": 3,
                 "type": "single",
-                "question": """Tiene VMs de producción que necesitan protección de datos.
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Requisitos:
-- Backup diario a las 2:00 AM
-- Retención de backups diarios por 30 días
-- Retención de backup semanal por 12 semanas
+Fabrikam tiene VMs críticas que requieren:
+
+- Backups diarios automáticos
+- Retención de 30 días
 - Capacidad de restaurar archivos individuales sin restaurar toda la VM
-- Los backups deben almacenarse en una región diferente
+- Almacenamiento de backups en otra región
 
 ¿Qué debe configurar?""",
-                "options": [
-                    "Azure Site Recovery para replicación continua",
-                    "Azure Backup con Recovery Services vault y backup policy personalizada",
-                    "Snapshots manuales de discos programados con Azure Automation",
-                    "Copiar VHDs a un Storage Account en otra región"
-                ],
+                "options": ['Azure Site Recovery', 'Azure Backup con Recovery Services vault (GRS)', 'Snapshots manuales del disco', 'AzCopy programado a otra región'],
                 "answer": 1,
-                "explanation": "Azure Backup con Recovery Services vault cumple todos los requisitos: 1) Backup policies permiten configurar schedule (diario 2 AM) y retención (30 días, 12 semanas), 2) File Recovery permite restaurar archivos individuales montando el backup como disco, 3) Geo-redundant storage (GRS) replica backups a otra región. Site Recovery es para DR (replicación continua), no backup tradicional. Snapshots manuales no ofrecen retención automática ni file recovery fácil."
+                "explanation": "Azure Backup con Recovery Services vault proporciona backups automáticos programados, políticas de retención configurables, y File Recovery para restaurar archivos individuales. Con redundancia GRS, los backups se replican a otra región. Site Recovery es para DR (replicación continua), no backups tradicionales. Snapshots son manuales y no incluyen File Recovery."
             },
             {
                 "id": 4,
                 "type": "single",
-                "question": """El CFO solicita un reporte de optimización de costos de Azure.
+                "question": """ESCENARIO: A. Datum Corporation
 
-Necesita identificar:
-- VMs que están sobredimensionadas (over-provisioned)
-- Discos huérfanos que no están attached a ninguna VM
-- Reserved Instance recommendations para ahorrar costos
-- VMs con uso de CPU consistentemente bajo
+A. Datum quiere identificar oportunidades para:
 
-¿Qué herramienta de Azure proporciona estas recomendaciones automáticamente?""",
-                "options": [
-                    "Azure Monitor con Workbooks personalizados",
-                    "Azure Advisor",
-                    "Microsoft Defender for Cloud",
-                    "Azure Cost Management"
-                ],
+- Optimizar costos
+- Mejorar la seguridad
+- Aumentar la confiabilidad
+- Mejorar el rendimiento
+
+Todo desde un solo servicio con recomendaciones personalizadas.
+
+¿Qué herramienta debe usar?""",
+                "options": ['Azure Monitor', 'Azure Advisor', 'Microsoft Defender for Cloud', 'Azure Cost Management'],
                 "answer": 1,
-                "explanation": "Azure Advisor proporciona recomendaciones automáticas en 5 categorías: 1) Cost (lo que solicita el CFO): VMs sobredimensionadas, Reserved Instance recommendations, recursos no utilizados, 2) Security, 3) Reliability, 4) Operational Excellence, 5) Performance. Las recomendaciones de costo incluyen savings estimados en $. Cost Management es para análisis de costos actuales, no recomendaciones de optimización. Defender for Cloud es principalmente para seguridad."
+                "explanation": "Azure Advisor analiza la configuración y uso de recursos y proporciona recomendaciones personalizadas en cinco categorías: Reliability (confiabilidad), Security (seguridad), Performance (rendimiento), Cost (costo), y Operational Excellence. Es un servicio gratuito que consolida todas estas áreas. Defender for Cloud es específico para seguridad."
             },
             {
                 "id": 5,
                 "type": "single",
-                "question": """El equipo de auditoría necesita saber:
+                "question": """ESCENARIO: Tailwind Traders
 
-- Quién creó un Resource Group llamado RG-Test hace 60 días
-- Quién eliminó 3 VMs del grupo RG-Production la semana pasada
-- Qué cambios de configuración se hicieron a un NSG específico
-- Todas las operaciones de creación/eliminación en las últimas 12 semanas
+Tailwind Traders necesita ver quién creó, modificó o eliminó recursos en una suscripción durante los últimos 90 días para una auditoría.
 
 ¿Dónde debe buscar esta información?""",
-                "options": [
-                    "Azure Monitor Metrics",
-                    "Activity Log (Azure Monitor Activity Log)",
-                    "Resource Health",
-                    "Azure Advisor History"
-                ],
+                "options": ['Azure Monitor Metrics', 'Activity Log', 'Resource health', 'Microsoft Defender for Cloud'],
                 "answer": 1,
-                "explanation": "Activity Log registra todas las operaciones de administración (control plane): 1) Quién realizó la acción (caller), 2) Qué acción se realizó (operation), 3) Cuándo (timestamp), 4) Estado (succeeded, failed). Incluye: creación/eliminación de recursos, cambios de configuración, asignaciones de roles. Retención: 90 días (puede exportar a Log Analytics o Storage para más tiempo). Metrics son para datos numéricos de rendimiento. Resource Health es estado actual, no histórico de acciones."
+                "explanation": "Activity Log (registro de actividad) registra operaciones del plano de control realizadas en recursos: quién hizo qué operación, cuándo, desde dónde (IP), y el resultado. Incluye creación, modificación y eliminación de recursos. Se retiene 90 días por defecto. Para retención más larga, exportar a Log Analytics o Storage Account."
             },
             {
                 "id": 6,
                 "type": "single",
-                "question": """Una aplicación web .NET en Azure App Service está experimentando errores intermitentes.
+                "question": """ESCENARIO: Woodgrove Bank
 
-Los usuarios reportan:
-- Errores HTTP 500 esporádicos
-- Tiempos de respuesta lentos en ciertas páginas
-- La aplicación a veces no responde
+Una aplicación web en App Service tiene errores HTTP 500 intermitentes. El equipo necesita:
 
-Necesita:
-- Ver cada request y su tiempo de respuesta
-- Identificar qué excepciones están ocurriendo
-- Correlacionar requests con las excepciones que generan
 - Ver el stack trace de las excepciones
-- Identificar dependencias lentas (SQL, APIs externas)
+- Correlacionar errores con requests específicos
+- Identificar dependencias lentas
+- Analizar el rendimiento de la aplicación
 
 ¿Qué debe habilitar?""",
-                "options": [
-                    "Diagnostic Settings para enviar logs a Log Analytics",
-                    "Application Insights para la aplicación web",
-                    "Azure Monitor Metrics con alertas",
-                    "Activity Log monitoring"
-                ],
+                "options": ['Diagnostic settings', 'Application Insights', 'Log Analytics', 'Azure Monitor Metrics'],
                 "answer": 1,
-                "explanation": "Application Insights es la solución correcta porque: 1) Instrumentación automática de aplicaciones .NET - captura requests, excepciones, dependencias, 2) Request tracking: tiempo de respuesta, código de estado, URL, 3) Exception tracking: tipo de excepción, mensaje, stack trace completo, 4) Correlation: conecta requests con las excepciones que generan usando Operation ID, 5) Dependency tracking: tiempo de llamadas a SQL, HTTP, etc. 6) Application Map visualiza la arquitectura y rendimiento. Diagnostic Settings no proporciona esta telemetría de aplicación."
+                "explanation": "Application Insights es una herramienta de Application Performance Management (APM) que proporciona telemetría completa de aplicaciones: requests, excepciones con stack traces, dependencias, métricas personalizadas, y correlación end-to-end. Se integra con App Service y proporciona dashboards de rendimiento y diagnóstico de errores."
             },
             {
                 "id": 7,
                 "type": "single",
-                "question": """Necesita implementar una estrategia de Disaster Recovery para VMs de producción.
+                "question": """ESCENARIO: Contoso, Ltd.
 
-Requisitos:
-- RPO (Recovery Point Objective): máximo 15 minutos de pérdida de datos
-- RTO (Recovery Time Objective): máximo 1 hora para estar operacional
-- Failover a una región secundaria en caso de desastre regional
-- Pruebas de failover sin afectar producción
+Contoso necesita implementar disaster recovery para VMs críticas con:
+
+- RPO (Recovery Point Objective) de 15 minutos
+- RTO (Recovery Time Objective) de 1 hora
+- Failover automático a región secundaria
 
 ¿Qué servicio debe usar?""",
-                "options": [
-                    "Azure Backup con GRS (Geo-Redundant Storage)",
-                    "Azure Site Recovery (ASR)",
-                    "Availability Zones en la misma región",
-                    "Virtual Machine Scale Sets multi-región"
-                ],
+                "options": ['Azure Backup', 'Azure Site Recovery', 'Availability Zones', 'Geo-redundant storage'],
                 "answer": 1,
-                "explanation": "Azure Site Recovery (ASR) es la solución correcta porque: 1) Replicación continua: RPO de segundos a minutos (cumple < 15 min), 2) Failover automatizado o manual con RTO típico de minutos a 1 hora, 3) Soporta failover a región secundaria (DR regional), 4) Test Failover permite probar el plan de DR sin afectar producción ni replicación, 5) Failback cuando la región primaria se recupera. Azure Backup tiene RPO de horas (frecuencia de backup). Availability Zones protegen contra falla de datacenter, no de región."
+                "explanation": "Azure Site Recovery (ASR) proporciona replicación continua de VMs a una región secundaria con RPO de segundos a minutos. Permite failover rápido (minutos) cumpliendo RTO de 1 hora. Incluye planes de recuperación y pruebas de DR sin impacto. Azure Backup tiene RPO de horas (frecuencia de backup). Availability Zones son para HA regional, no DR."
             },
             {
                 "id": 8,
                 "type": "single",
-                "question": """Su organización tiene 5 suscripciones de Azure y el CFO necesita:
+                "question": """ESCENARIO: Litware, Inc.
 
-- Ver costos consolidados de TODAS las suscripciones
-- Crear presupuestos con alertas al 80% y 100% del límite
-- Analizar costos por departamento usando tags
-- Exportar reportes de costos mensualmente a un Storage Account
+Litware tiene múltiples suscripciones y necesita:
+
+- Vista consolidada de costos de todas las suscripciones
+- Crear presupuestos mensuales con alertas
+- Analizar costos por departamento (usando tags)
+- Ver recomendaciones de ahorro
 
 ¿Qué herramienta debe usar?""",
-                "options": [
-                    "Azure Pricing Calculator",
-                    "Azure Cost Management + Billing",
-                    "Azure Advisor Cost recommendations",
-                    "Azure Monitor con Workbooks"
-                ],
+                "options": ['Azure Pricing Calculator', 'Azure Cost Management + Billing', 'Azure Advisor (solo)', 'Azure Monitor'],
                 "answer": 1,
-                "explanation": "Azure Cost Management + Billing proporciona: 1) Cost Analysis: vista consolidada de costos de múltiples suscripciones, filtros y agrupación por tags (departamento), 2) Budgets: crear presupuestos con alertas configurables (80%, 100%), 3) Exports: programar exportación de datos de costos a Storage Account, 4) Recommendations: integración con Azure Advisor para optimización. Pricing Calculator es para estimación pre-deployment. Advisor es solo para recomendaciones, no análisis de costos. Monitor es para métricas y logs operacionales."
+                "explanation": "Azure Cost Management + Billing proporciona análisis de costos multi-suscripción, presupuestos con alertas configurables, agrupación por tags/resource groups/suscripciones, y recomendaciones de optimización de costos. Pricing Calculator es para estimar costos futuros, no analizar gastos actuales. Advisor proporciona algunas recomendaciones de costo pero no análisis completo."
             },
             {
                 "id": 9,
                 "type": "single",
-                "question": """Tiene VMs Windows Server que necesitan enviar los siguientes datos a Log Analytics:
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-- Windows Event Logs (Application, System, Security)
-- Performance counters (CPU, Memory, Disk, Network)
-- IIS Logs
-- Custom logs de una aplicación
+Fabrikam necesita enviar logs de Windows Event Viewer de múltiples VMs a un Log Analytics workspace.
 
 ¿Qué debe instalar en las VMs?""",
-                "options": [
-                    "Azure Diagnostics extension solamente",
-                    "Azure Monitor Agent (AMA) con Data Collection Rules",
-                    "Application Insights SDK",
-                    "Custom Script Extension con script de recolección"
-                ],
+                "options": ['Azure Diagnostics extension', 'Azure Monitor Agent', 'Application Insights SDK', 'Custom Script Extension'],
                 "answer": 1,
-                "explanation": "Azure Monitor Agent (AMA) con Data Collection Rules es la solución actual recomendada: 1) Reemplaza al agente legacy (MMA/OMS), 2) Data Collection Rules (DCR) definen qué datos recopilar y a dónde enviarlos, 3) Soporta Windows Events, Performance Counters, IIS Logs, Custom logs, 4) Configuración centralizada y escalable. La extensión Diagnostics es para métricas a Azure Monitor y logs a Storage, no óptima para Log Analytics. Application Insights es para aplicaciones, no infraestructura de VM."
+                "explanation": "Azure Monitor Agent (AMA) es el agente recomendado para recopilar logs y métricas de VMs y enviarlos a Log Analytics workspace. Reemplaza al Legacy Log Analytics Agent (MMA) y Azure Diagnostics extension. Usa Data Collection Rules para configurar qué datos recopilar. Application Insights SDK es para aplicaciones, no logs del sistema operativo."
             },
             {
                 "id": 10,
                 "type": "single",
-                "question": """Una VM de producción muestra el estado 'Unavailable' en Azure Resource Health.
+                "question": """ESCENARIO: A. Datum Corporation
 
-Los usuarios reportan que no pueden conectar a la aplicación en esta VM.
-El portal de Azure muestra la VM como 'Running'.
+Una VM de Azure muestra estado 'Unavailable' en Resource Health.
 
-¿Qué indica el estado 'Unavailable' en Resource Health?""",
-                "options": [
-                    "El usuario apagó la VM intencionalmente",
-                    "Azure ha detectado un problema de plataforma que afecta la VM",
-                    "La VM necesita actualizaciones del sistema operativo",
-                    "El agente de Azure VM no está respondiendo"
-                ],
+¿Qué indica esto?""",
+                "options": ['La VM está apagada por el usuario', 'Azure detectó un problema de plataforma que afecta la VM', 'La VM necesita actualizaciones de sistema operativo', 'El disco de la VM está lleno'],
                 "answer": 1,
-                "explanation": "Resource Health 'Unavailable' indica que Azure ha detectado un problema de PLATAFORMA afectando el recurso: 1) Puede ser falla de hardware del host, 2) Problemas de red en la infraestructura de Azure, 3) Otros problemas del servicio de Azure. Es diferente de problemas causados por el usuario o el sistema operativo guest. Cuando el problema es de plataforma, Azure típicamente inicia auto-recovery (migración de la VM a otro host). El estado 'Running' en el portal indica el estado deseado, no necesariamente el estado actual de salud."
+                "explanation": "Resource Health muestra el estado actual e histórico de recursos. 'Unavailable' indica que Azure detectó un evento de plataforma (no causado por el usuario) que está afectando la disponibilidad del recurso. Proporciona información sobre la causa raíz y acciones recomendadas. VMs apagadas por usuario muestran 'Unknown' o estado diferente."
             },
             {
                 "id": 11,
-                "type": "multiple",
-                "question": """Está configurando Azure Backup para proteger VMs en la región East US.
+                "type": "single",
+                "question": """ESCENARIO: Tailwind Traders
 
-El Recovery Services vault se llama vault-backup-eastus.
+Tailwind Traders necesita ser notificado proactivamente cuando Azure planea realizar mantenimiento que afectará sus VMs.
 
-¿Cuáles DOS afirmaciones son correctas sobre Azure Backup para VMs? (Seleccione dos)""",
-                "options": [
-                    "El Recovery Services vault debe estar en la misma región que las VMs que protege",
-                    "Un Recovery Services vault puede proteger VMs en cualquier región de Azure",
-                    "Azure Backup soporta tanto discos Managed como Unmanaged",
-                    "Azure Backup solo funciona con VMs Windows, no Linux"
-                ],
-                "answer": [0, 2],
-                "explanation": "Las afirmaciones correctas son: 1) El vault DEBE estar en la misma región que las VMs - esto es un requisito de Azure Backup. Para proteger VMs en diferentes regiones, necesita vaults en cada región. 2) Azure Backup soporta discos Managed y Unmanaged, aunque Microsoft recomienda Managed disks. Azure Backup funciona tanto con Windows como Linux VMs - no es exclusivo de Windows."
+¿Qué debe configurar?""",
+                "options": ['Activity Log alert para eventos de VM', 'Service Health alerts', 'Metric alert para disponibilidad', 'Azure Advisor notifications'],
+                "answer": 1,
+                "explanation": "Service Health proporciona información personalizada sobre eventos de Azure que afectan sus recursos específicos: service issues (interrupciones), planned maintenance (mantenimiento planificado), y health advisories. Configure alertas de Service Health para recibir notificaciones proactivas sobre mantenimiento que afectará sus recursos."
             },
             {
                 "id": 12,
                 "type": "single",
-                "question": """Necesita crear un dashboard ejecutivo que muestre:
+                "question": """ESCENARIO: Woodgrove Bank
 
-- Estado de salud de todas las VMs de producción
-- Métricas de rendimiento (CPU, memoria) en tiempo real
-- Alertas activas
-- Tendencias de costos del último mes
-- Todo en una sola vista accesible desde el portal de Azure
+Woodgrove Bank necesita retener Activity Logs por 2 años para cumplimiento regulatorio.
 
-¿Cuál es la MEJOR opción para crear este dashboard?""",
-                "options": [
-                    "Azure Monitor Workbooks con visualizaciones personalizadas",
-                    "Log Analytics queries guardadas",
-                    "Azure Portal Dashboard con tiles de métricas",
-                    "Cualquiera de las opciones anteriores funcionaría, pero Workbooks ofrece más flexibilidad"
-                ],
-                "answer": 3,
-                "explanation": "Todas las opciones pueden crear dashboards, pero tienen diferentes fortalezas: 1) Azure Portal Dashboard: Fácil de crear, permite pinear métricas y charts, bueno para dashboards simples, 2) Log Analytics queries: Potente para análisis de logs, puede crear visualizaciones, 3) Workbooks: Más flexible, combina métricas, logs, texto, parámetros interactivos, ideal para reportes ejecutivos complejos. Para el escenario descrito (múltiples tipos de datos), Workbooks ofrece la mayor flexibilidad para combinar diferentes fuentes de datos en una vista cohesiva."
+El Activity Log por defecto solo retiene 90 días.
+
+¿Qué debe configurar?""",
+                "options": ['Cambiar la configuración de retención del Activity Log', 'Exportar Activity Log a Log Analytics workspace o Storage Account', 'No es posible retener más de 90 días', 'Crear copias manuales cada 90 días'],
+                "answer": 1,
+                "explanation": "Activity Log tiene retención fija de 90 días que no puede cambiarse. Para retención más larga, configure Diagnostic Settings para exportar a: 1) Log Analytics workspace (hasta 12 años con archive), 2) Storage Account (retención ilimitada, más económico para largo plazo). También puede exportar a Event Hub para streaming a sistemas externos."
             },
             {
                 "id": 13,
-                "type": "single",
-                "question": """Su empresa requiere retener los Activity Logs por 3 años para cumplimiento regulatorio.
+                "type": "multiple",
+                "question": """ESCENARIO: Contoso, Ltd.
 
-El Activity Log en Azure tiene una retención predeterminada de 90 días.
+Contoso está configurando Azure Backup para proteger VMs.
 
-¿Qué debe configurar para cumplir con el requisito de 3 años?""",
-                "options": [
-                    "Cambiar la configuración de retención del Activity Log a 3 años",
-                    "Crear un Diagnostic Setting para exportar Activity Logs a Log Analytics o Storage Account",
-                    "No es posible retener Activity Logs por más de 90 días",
-                    "Crear alertas que guarden los eventos importantes"
-                ],
-                "answer": 1,
-                "explanation": "Diagnostic Settings es la solución correcta: 1) Activity Log tiene retención FIJA de 90 días - no se puede cambiar, 2) Debe crear un Diagnostic Setting para exportar a: - Log Analytics workspace (retención hasta 2 años built-in, o más con archive) - Storage Account (retención ilimitada, más económico para largo plazo), 3) Para 3 años, Storage Account es típicamente más económico. El Diagnostic Setting envía continuamente los nuevos eventos al destino configurado. Puede configurar ambos destinos para tener análisis en Log Analytics y archivo a largo plazo en Storage."
+¿Cuáles DOS afirmaciones son correctas sobre Recovery Services vault? (Seleccione dos)""",
+                "options": ['El vault debe estar en la misma región que las VMs a proteger', 'Un vault puede proteger VMs en cualquier región', 'Se puede configurar soft delete para proteger contra eliminación accidental de backups', 'Los backups solo funcionan con VMs Windows'],
+                "answer": [0, 2],
+                "explanation": "Recovery Services vault debe estar en la misma región que las VMs que protege (o en la región emparejada para Cross-Region Restore). Soft delete mantiene los datos de backup por 14 días adicionales después de eliminar un backup, protegiendo contra eliminación accidental o ransomware. Azure Backup soporta tanto VMs Windows como Linux."
             },
             {
                 "id": 14,
                 "type": "single",
-                "question": """Tiene VMs de producción críticas y necesita ser notificado proactivamente cuando:
+                "question": """ESCENARIO: Litware, Inc.
 
-- Azure planea mantenimiento que podría afectar sus VMs
-- Hay un incidente de servicio en la región donde están sus recursos
-- Hay avisos de seguridad que afectan servicios que usa
+Litware necesita crear un dashboard que muestre:
 
-¿Qué debe configurar?""",
-                "options": [
-                    "Activity Log alerts para todas las categorías",
-                    "Service Health alerts",
-                    "Metric alerts para disponibilidad de VM",
-                    "Azure Advisor notifications"
-                ],
+- Métricas de CPU y memoria de múltiples VMs
+- Logs de errores de aplicaciones
+- Estado de alertas activas
+- Visualizaciones interactivas
+
+¿Qué debe usar?""",
+                "options": ['Azure Portal Dashboard solamente', 'Azure Monitor Workbooks', 'Log Analytics queries solamente', 'Power BI'],
                 "answer": 1,
-                "explanation": "Service Health alerts es la solución correcta para notificaciones proactivas de Azure: 1) Planned Maintenance: notifica sobre mantenimiento programado que podría afectar sus recursos específicos, 2) Service Issues: alerta sobre incidentes de servicio/outages en regiones donde tiene recursos, 3) Security Advisories: avisos de seguridad que afectan servicios de Azure, 4) Health Advisories: otra información relevante. Service Health filtra eventos relevantes a SUS recursos, no eventos globales que no le afectan. Activity Log alerts son para eventos de administración, no eventos de plataforma."
+                "explanation": "Azure Monitor Workbooks proporciona reportes interactivos que combinan métricas, logs, y visualizaciones en un solo canvas. Permite crear visualizaciones personalizadas, filtros interactivos, y combinar datos de múltiples fuentes. Los dashboards del portal son más limitados. Log Analytics queries son la base pero Workbooks agrega interactividad."
             },
             {
                 "id": 15,
                 "type": "single",
-                "question": """Tiene Application Insights configurado para su aplicación web.
+                "question": """ESCENARIO: Fabrikam, Inc.
 
-Necesita detectar automáticamente:
-- Anomalías en tiempos de respuesta
-- Aumento inusual en tasa de errores
-- Degradación de rendimiento
-- Problemas de dependencias (SQL lento, APIs fallando)
+Fabrikam configuró Site Recovery para VMs críticas. Necesita probar el plan de recuperación sin afectar la producción.
 
-SIN tener que configurar umbrales específicos para cada métrica.
-
-¿Qué feature de Application Insights proporciona esto?""",
-                "options": [
-                    "Smart Detection (Detección Inteligente)",
-                    "Live Metrics Stream",
-                    "Alert Rules configuradas manualmente",
-                    "Availability Tests"
-                ],
-                "answer": 0,
-                "explanation": "Smart Detection es la característica correcta porque: 1) Usa machine learning para detectar anomalías automáticamente SIN configurar umbrales, 2) Detecta: tiempos de respuesta anormalmente lentos, tasas de error inusuales, degradación de rendimiento, problemas de memoria, 3) Envía notificaciones por email cuando detecta problemas, 4) Aprende el comportamiento 'normal' de su aplicación y alerta sobre desviaciones. Alert Rules requieren umbrales manuales. Live Metrics es para monitoreo en tiempo real pero no alertas automáticas. Availability Tests verifican disponibilidad desde ubicaciones externas."
+¿Qué tipo de failover debe ejecutar?""",
+                "options": ['Planned failover', 'Unplanned failover', 'Test failover', 'Forced failover'],
+                "answer": 2,
+                "explanation": "Test failover crea una réplica de las VMs en la región secundaria en una red aislada, sin afectar la replicación ni las VMs de producción. Permite validar que el plan de recuperación funciona correctamente. Después de la prueba, se limpian los recursos de test. Planned/Unplanned failover son para eventos reales que afectan producción."
             }
         ]
     }
